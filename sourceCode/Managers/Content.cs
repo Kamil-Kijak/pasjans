@@ -1,19 +1,19 @@
 
 
 public class Content {
-    private static DrawableObject[] _objects = {
-        new(
-          
+    private static Dictionary<Objects, string> _objects = new Dictionary<Objects, string>()
+        {
+            {Objects.TITLE,
 @"+----------------------------------------------------+
 |#######    #     ######    #     #     #    # ######|
 |#     #   # #    #         #    # #    ##   # #     |
 |#######  #   #   ######    #   #   #   # #  # ######|
 |#       #######       # # ##  #######  #  # #      #|
 |#      #       # ######  #   #       # #   ## ######|
-+----------------------------------------------------+"
-        )
-    };
-    public static DrawableObject GetDrawableObject(Objects value) {
-        return _objects[(int)value];
++----------------------------------------------------+"}
+        };
+
+    public static string GetDrawableObject(Objects value) {
+        return _objects[value];
     }
 }

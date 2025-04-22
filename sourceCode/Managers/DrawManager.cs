@@ -39,6 +39,10 @@ public static class DrawManager {
         DrawableObject box = new (stringObject, foregroundColor, backgroundColor);
         return box;
     }
+    public static Text CreateText(string[] linesOfText, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black) {
+        Text text = new (linesOfText, foregroundColor, backgroundColor);
+        return text;
+    }
     public static void DrawText(string text, Vector position, AlignX alignX = AlignX.LEFT) {
         int xPos = (int)(position.X - text.Length * ((int)alignX / 2f));
         if(xPos < 0) {
