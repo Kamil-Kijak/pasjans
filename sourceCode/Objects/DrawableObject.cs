@@ -4,8 +4,8 @@ public class DrawableObject {
     protected string[] _lines;
     protected int _width;
     protected int _height;
-    private ConsoleColor _foregroundColor;
-    private ConsoleColor _backgroundColor;
+    protected ConsoleColor _foregroundColor;
+    protected ConsoleColor _backgroundColor;
     public DrawableObject(string lines) {
         _lines = lines.Split("\n");
         _width = _lines[0].Length;
@@ -63,13 +63,15 @@ public class DrawableObject {
         set {
             _foregroundColor = value;
         }
+        get { return _foregroundColor; }
     }
     public ConsoleColor BackgroundColor {
         set {
             _backgroundColor = value;
         }
+        get { return _backgroundColor; }
     }
-    public  string Lines {
+    public string Lines {
         set {
             _lines = value.Split("\n");
             _width = _lines[0].Length;

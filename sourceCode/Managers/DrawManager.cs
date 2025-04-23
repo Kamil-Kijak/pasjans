@@ -12,7 +12,7 @@ public static class DrawManager {
         }
         Console.ResetColor();
     }
-    public static DrawableObject CreateBox(int width, int heigth, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.White) {
+    public static DrawableObject CreateBox(int width, int heigth, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black) {
         string stringObject = "";
         stringObject += '+';
         for (int i = 0; i < width - 2; i++) {
@@ -43,13 +43,7 @@ public static class DrawManager {
         Text text = new (linesOfText, foregroundColor, backgroundColor);
         return text;
     }
-    public static void DrawText(string text, Vector position, AlignX alignX = AlignX.LEFT) {
-        int xPos = (int)(position.X - text.Length * ((int)alignX / 2f));
-        if(xPos < 0) {
-            xPos = 0;
-        }
-        Console.SetCursorPosition(xPos, (int)position.Y);
-        Console.WriteLine(text);
-        Console.WriteLine();
+    public static void DrawComponets() {
+        
     }
 }
