@@ -7,4 +7,8 @@ public abstract class BaseScene {
     public virtual void Update() {
         DrawComponets();
     }
+    public void LoadScene(Scenes? scene) {
+        if(scene != null)
+            Content.GetScene((Scenes)scene).Update();
+    }
 }
