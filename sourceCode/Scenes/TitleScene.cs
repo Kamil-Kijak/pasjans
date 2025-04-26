@@ -12,6 +12,7 @@ public class TitleScene : BaseScene {
     private DrawableObject _gameOptionSelectBox;
     private DrawableObject _leaderBoardBox;
     private Text _scores;
+    private Difficulty _selectedDifficulty;
 
     public TitleScene() {
         _authorText = new(["stworzony przez", " ", "Kamila Kijaka"]);
@@ -57,6 +58,7 @@ public class TitleScene : BaseScene {
         LoadLeaderBoard();
         //Scenes scene = Scenes.TITLE_SCENE;
         SelectPanel.ChooseState chooseState;
+        Scenes scene;
         while(true) {
             switch(_states) {
                 case 0:
@@ -89,11 +91,13 @@ public class TitleScene : BaseScene {
                     if(chooseState == SelectPanel.ChooseState.CHOOSEN) {
                         switch(_difficultySelect.Index) {
                             case 0:
-                                
-                            break;
+                                scene = Scenes.GAME_SCENE;
+                                _selectedDifficulty = Difficulty.EASY;
+                                goto LOADSCENE;
                             case 1:
-                                
-                            break;
+                                _selectedDifficulty = Difficulty.HARD;
+                                scene = Scenes.GAME_SCENE;
+                                goto LOADSCENE;
                             case 2:
                             _states = 0;
                             break;
@@ -104,8 +108,8 @@ public class TitleScene : BaseScene {
                 break;
             }
         }
-        // LOADSCENE:
-        //     LoadScene(scene);
+        LOADSCENE:
+            LoadScene(scene);
 
     }
     private void LoadLeaderBoard() {
@@ -124,4 +128,7 @@ public class TitleScene : BaseScene {
             }
         }
     }
+    public override Difficulty SelectedDifficulty {
+        get { return _selectedDifficulty; }
+    } 
 }

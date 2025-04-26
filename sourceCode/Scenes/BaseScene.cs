@@ -11,4 +11,8 @@ public abstract class BaseScene {
         if(scene != null)
             Content.GetScene((Scenes)scene).Update();
     }
+    public virtual Difficulty SelectedDifficulty {
+        get { return Difficulty.EASY;}
+
+    }
 }
