@@ -128,7 +128,7 @@ public class TitleScene : BaseScene {
             }
         }
     }
-    public override Difficulty SelectedDifficulty {
+    public Difficulty SelectedDifficulty {
         get { return _selectedDifficulty; }
     } 
 }
