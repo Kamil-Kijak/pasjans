@@ -2,23 +2,35 @@
 public class Card : DrawableObject
 {
     private bool _showed;
+    private char _character;
     private string _symbol;
-    private string _number;
     private ConsoleColor _cardColor;
-    public Card(string number, string symbol, bool showed, ConsoleColor cardColor = ConsoleColor.White) :
-     base(string.Format(Content.GetTextObject(Objects.CARD_BODY), number.PadRight(2, ' '), symbol), cardColor, ConsoleColor.Black)
+    private DrawableObject _pattern;
+    public Card(string symbol, char character, bool showed) :
+     base(string.Format(Content.GetTextObject(Objects.CARD_BODY), symbol.PadRight(2, ' '), character), ConsoleColor.Black, ConsoleColor.Black)
     {
-        _cardColor = cardColor;
-        Showed = showed;
-        _number = number;
+        if(character == '♥' || character == '♦') {
+            _cardColor = ConsoleColor.Red;
+        } else {
+            _cardColor = ConsoleColor.White;
+        }
         _symbol = symbol;
+        _character = character;
+        ForegroundColor = _cardColor;
+        Showed = showed;
+        _pattern = new (string.Format(Content.GetCardPattern(symbol), character.ToString().PadRight(2, ' ')), _cardColor, ConsoleColor.Black);
+    }
+    public override void Draw(Vector position)
+    {
+        base.Draw(position);
+        _pattern.Draw(new Vector(position.X + 3, position.Y + 3));
     }
     public bool Showed {
         set {
             _showed = value;
             if(_showed) {
                 _foregroundColor = _cardColor;
-                Lines = string.Format(Content.GetTextObject(Objects.CARD_BODY), _number.PadRight(2, ' '), _symbol);
+                Lines = string.Format(Content.GetTextObject(Objects.CARD_BODY), _symbol.PadRight(2, ' '), _character);
             } else {
                 _foregroundColor = ConsoleColor.White;
                 Lines = Content.GetTextObject(Objects.CARD_BACK);
