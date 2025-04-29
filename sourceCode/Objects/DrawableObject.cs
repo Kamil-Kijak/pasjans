@@ -28,16 +28,16 @@ public class DrawableObject {
         if(xPos < 0) {
             xPos = 0;
         }
-        if(xPos > Console.WindowWidth) {
-            xPos = Console.WindowWidth;
+        if(xPos >= Console.WindowWidth) {
+            xPos = Console.WindowWidth - 1;
         }
         for (int i = 0;i<_lines.Length;i++) {
             yPos = (int)(position.Y + i - _height * ((int)alignY / 2f));
             if(yPos < 0) {
                 yPos = 0;
             }
-            if(yPos > Console.WindowHeight) {
-                yPos = Console.WindowHeight;
+            if(yPos >= Console.WindowHeight) {
+                yPos = Console.WindowHeight - 1;
             }
             Console.SetCursorPosition(xPos, yPos);
             Console.WriteLine(_lines[i]);

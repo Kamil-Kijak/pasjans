@@ -56,39 +56,34 @@ public class TitleScene : BaseScene {
     {
         base.Update();
         LoadLeaderBoard();
-        //Scenes scene = Scenes.TITLE_SCENE;
-        SelectPanel.ChooseState chooseState;
         Scenes scene;
         while(true) {
             switch(_states) {
                 case 0:
-                    chooseState = _gameOptionSelect.Listen();
-                    if(chooseState == SelectPanel.ChooseState.CHOOSEN) {
-                        switch(_gameOptionSelect.Index) {
-                            case 0:
-                                _states = 2;
-                                _difficultySelect.Index = 0;
-                                break;
-                            case 1:
-                                _states = 1;
+                    if(ChoosenState(_gameOptionSelect)) {
+                    switch(_gameOptionSelect.Index) {
+                        case 0:
+                            _states = 2;
+                            _difficultySelect.Index = 0;
                             break;
-                            case 2:
-                            Console.Clear();
-                            return;
-                        }
+                        case 1:
+                            _states = 1;
+                        break;
+                        case 2:
+                        Console.Clear();
+                        return;
                     }
-                    base.Update();
+                }
+        base.Update();
                 break;
                 case 1:
-                    chooseState = _leaderBoardExit.Listen();
-                    if(chooseState == SelectPanel.ChooseState.CHOOSEN) {
+                    if(ChoosenState(_leaderBoardExit)) {
                         _states = 0;
                     }
                     base.Update();
                 break;
                 case 2:
-                    chooseState = _difficultySelect.Listen();
-                    if(chooseState == SelectPanel.ChooseState.CHOOSEN) {
+                    if(ChoosenState(_difficultySelect)) {
                         switch(_difficultySelect.Index) {
                             case 0:
                                 scene = Scenes.GAME_SCENE;
@@ -111,6 +106,13 @@ public class TitleScene : BaseScene {
         LOADSCENE:
             LoadScene(scene);
 
+    }
+    internal bool ChoosenState(SelectPanel  selectPanel) {
+        if(selectPanel.Listen() == SelectPanel.ChooseState.CHOOSEN) {
+            return true;
+        } else {
+            return false;
+        }
     }
     private void LoadLeaderBoard() {
         if(!File.Exists(Path.Combine(Content.AppPath, "leaderboard.json"))) {

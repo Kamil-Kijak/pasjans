@@ -26,14 +26,14 @@ public class Text : DrawableObject {
             if(xPos < 0) {
                 xPos = 0;
             }
-            if(xPos > Console.WindowWidth) {
-                xPos = Console.WindowWidth;
+            if(xPos >= Console.WindowWidth) {
+                xPos = Console.WindowWidth - 1;
             }
             if(yPos < 0) {
                 yPos = 0;
             }
-            if(yPos > Console.WindowHeight) {
-                yPos = Console.WindowHeight;
+            if(yPos >= Console.WindowHeight) {
+                yPos = Console.WindowHeight - 1;
             }
             Console.SetCursorPosition(xPos, yPos);
             Console.WriteLine(_lines[i]);
