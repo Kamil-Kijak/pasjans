@@ -55,17 +55,19 @@ public class DrawableObject {
     }
     public int Width {
         get{ return _width; }
+        set {_width = value;}
     }
     public int Height {
         get{ return _height; }
+        set {_width = value;}
     }
-    public ConsoleColor ForegroundColor {
+    public virtual ConsoleColor ForegroundColor {
         set {
             _foregroundColor = value;
         }
         get { return _foregroundColor; }
     }
-    public ConsoleColor BackgroundColor {
+    public virtual ConsoleColor BackgroundColor {
         set {
             _backgroundColor = value;
         }
@@ -76,6 +78,9 @@ public class DrawableObject {
             _lines = value.Split("\n");
             _width = _lines[0].Length;
             _height = _lines.Length;
+        }
+        get {
+            return string.Join("\n", _lines);
         }
     }
 }

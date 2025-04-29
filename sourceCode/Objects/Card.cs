@@ -16,9 +16,9 @@ public class Card : DrawableObject
         }
         _symbol = symbol;
         _character = character;
-        ForegroundColor = _cardColor;
         Showed = showed;
         _pattern = new (string.Format(Content.GetCardPattern(symbol), character.ToString().PadRight(2, ' ')), _cardColor, ConsoleColor.Black);
+        ForegroundColor = _cardColor;
     }
     public override void Draw(Vector position)
     {
@@ -35,6 +35,13 @@ public class Card : DrawableObject
                 _foregroundColor = ConsoleColor.White;
                 Lines = Content.GetTextObject(Objects.CARD_BACK);
             }
+        }
+    }
+    public new ConsoleColor ForegroundColor {
+        get { return _foregroundColor; }
+        set {
+            _foregroundColor = value;
+            _pattern.ForegroundColor = value;
         }
     }
 }

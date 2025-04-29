@@ -11,6 +11,14 @@ public struct Vector {
     public Vector() {
 
     }
+    public void Add(float x, float y) {
+        _x += x;
+        _y += y;
+    }
+    public void Add(Vector vector) {
+        _x += vector.X;
+        _y += vector.Y;
+    }
     public float X {
         get {return _x; }
         set { _x = value; }

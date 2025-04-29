@@ -36,7 +36,33 @@ public class Content {
 |#  #  #  #  #|
 | #  #  #  #  |
 +-------------+"
-        }
+        },
+        {Objects.HEART,
+@"  ██ ██
+ ███████
+  █████
+   ███  
+    █"},
+    {Objects.DIAMOND,
+@"    █
+   ███
+  █████
+   ███  
+    █"},
+ {Objects.SPADEL, 
+@"    █ 
+  █████
+ ███████
+ ███████
+    █"
+ },
+ {Objects.TREFL,
+@"   ████
+  ██████
+███   ████
+ ████████
+    █
+"}
         };
     private static Dictionary<string, string> _cardPatterns = new(){
         {"A",

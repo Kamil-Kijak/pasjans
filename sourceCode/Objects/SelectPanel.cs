@@ -1,14 +1,14 @@
 
 
 public class SelectPanel {
-    private Text[] _objects;
+    private DrawableObject[] _objects;
     private ConsoleColor _changeColor;
     private ConsoleColor[] _previrousColors;
     private int _index;
     private Direction _direction;
     private ConsoleKey _upKey;
     private ConsoleKey _downKey;
-    public SelectPanel(Text[] objects, ConsoleColor changeColor, int startingIndex = 0, Direction direction = Direction.VERTICALY) {
+    public SelectPanel(DrawableObject[] objects, ConsoleColor changeColor, int startingIndex = 0, Direction direction = Direction.VERTICALY) {
         _index = startingIndex;
         _objects = objects;
         _previrousColors = new ConsoleColor[objects.Length];
