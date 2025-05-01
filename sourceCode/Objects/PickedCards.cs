@@ -23,6 +23,12 @@ public class PickedCards : IPanel
     {
         Draw(position);
     }
+
+    public void ActionPerformed()
+    {
+        throw new NotImplementedException();
+    }
+
     public ConsoleColor ForegroundColor {
         get {
              if(_pickedCardsList.Count > 0) {

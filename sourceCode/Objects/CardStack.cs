@@ -3,12 +3,12 @@
 public class CardStack : IPanel
 {
     private List<Card> _cardStackList;
-    private DrawableObject _pickedCardsPlace;
+    private DrawableObject _cardStackPlace;
     private static Random _random = new Random();
 
     public CardStack() {
         _cardStackList = new();
-        _pickedCardsPlace = DrawManager.CreateBox(15, 11);
+        _cardStackPlace = DrawManager.CreateBox(15, 11);
         char[] characters = {'♥', '♦', '♠', '♣'};
         string[] symbols = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         foreach (char character in characters) {
@@ -32,13 +32,18 @@ public class CardStack : IPanel
         if(_cardStackList.Count > 0) {
             _cardStackList[^1].Draw(position);
         } else {
-            _pickedCardsPlace.Draw(position);
+            _cardStackPlace.Draw(position);
         }
     }
 
     public void Draw(Vector position, AlignX alignX, AlignY alignY)
     {
         Draw(position);
+    }
+
+    public void ActionPerformed()
+    {
+        throw new NotImplementedException();
     }
 
     public List<Card> CardStackList {
@@ -52,14 +57,14 @@ public class CardStack : IPanel
              if(_cardStackList.Count > 0) {
                 return _cardStackList[^1].ForegroundColor;
             } else {
-                return _pickedCardsPlace.ForegroundColor;
+                return _cardStackPlace.ForegroundColor;
             }
         }
         set {
              if(_cardStackList.Count > 0) {
                 _cardStackList[^1].ForegroundColor = value;
             } else {
-                _pickedCardsPlace.ForegroundColor = value;
+                _cardStackPlace.ForegroundColor = value;
             }
         }
     }
@@ -68,14 +73,14 @@ public class CardStack : IPanel
              if(_cardStackList.Count > 0) {
                 return _cardStackList[^1].BackgroundColor;
             } else {
-                return _pickedCardsPlace.BackgroundColor;
+                return _cardStackPlace.BackgroundColor;
             }
         }
         set {
              if(_cardStackList.Count > 0) {
                 _cardStackList[^1].BackgroundColor = value;
             } else {
-                _pickedCardsPlace.BackgroundColor = value;
+                _cardStackPlace.BackgroundColor = value;
             }
         }
          }
@@ -84,14 +89,14 @@ public class CardStack : IPanel
              if(_cardStackList.Count > 0) {
                 return _cardStackList[^1].Width;
             } else {
-                return _pickedCardsPlace.Width;
+                return _cardStackPlace.Width;
             }
         }
         set {
              if(_cardStackList.Count > 0) {
                 _cardStackList[^1].Width = value;
             } else {
-                _pickedCardsPlace.Width = value;
+                _cardStackPlace.Width = value;
             }
         }
          }
@@ -100,14 +105,14 @@ public class CardStack : IPanel
              if(_cardStackList.Count > 0) {
                 return _cardStackList[^1].Height;
             } else {
-                return _pickedCardsPlace.Height;
+                return _cardStackPlace.Height;
             }
         }
         set {
              if(_cardStackList.Count > 0) {
                 _cardStackList[^1].Height = value;
             } else {
-                _pickedCardsPlace.Height = value;
+                _cardStackPlace.Height = value;
             }
         }
     }
