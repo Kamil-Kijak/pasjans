@@ -13,10 +13,10 @@ public class CardStack : IPanel
         string[] symbols = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         foreach (char character in characters) {
             foreach (string symbol in symbols) {
-                CardStackList.Add(new Card(symbol, character, true));
+                _cardStackList.Add(new Card(symbol, character, false));
             }
         }
-        Shuffle(CardStackList);
+        Shuffle(_cardStackList);
     }
     private void Shuffle(List<Card> cards) {
         // shuffle algoritm
@@ -40,12 +40,41 @@ public class CardStack : IPanel
     {
         Draw(position);
     }
-
     public void ActionPerformed()
     {
-        throw new NotImplementedException();
+        if(Content.GetScene(Scenes.GAME_SCENE) is GameScene gameScene) {
+            Card cardToAdd;
+            if(_cardStackList.Count == 0) {
+                ReShuffleCards(gameScene.PickedCards.GetAllCards());
+            } else {
+                if(gameScene.Difficulty == Difficulty.EASY) {
+                    cardToAdd = GetFirstCard();
+                    cardToAdd.Showed = true;
+                    gameScene.PickedCards.AddCard(cardToAdd); 
+                } else {
+                    for (int i = 0; i < 3; i++) {
+                        cardToAdd = GetFirstCard();
+                        cardToAdd.Showed = true;
+                        gameScene.PickedCards.AddCard(cardToAdd);
+                        if(_cardStackList.Count == 0) {
+                            break;
+                        } 
+                    }
+                }
+            }
+        }
     }
-
+    private Card GetFirstCard() {
+        Card cardCopy = _cardStackList[^1].Copy();
+        _cardStackList.RemoveAt(_cardStackList.Count - 1);
+        return cardCopy;
+    }
+    private void ReShuffleCards(Card[] pickedCards) {
+        foreach (Card card in pickedCards) {
+            _cardStackList.Add(card);
+        }
+        Shuffle(_cardStackList);
+    }
     public List<Card> CardStackList {
         get {
             return _cardStackList;

@@ -31,9 +31,18 @@ public class GameScene : BaseScene {
         while(true) {
             SelectPanel2d.ChooseState chooseState =_selectPanel2d.Listen();
             if(chooseState == SelectPanel2d.ChooseState.CHOOSEN) {
-                _gameObjects[(int)_selectPanel2d.Index.Y, (int)_selectPanel2d.Index.Y].ActionPerformed();
+                _gameObjects[(int)_selectPanel2d.Index.Y, (int)_selectPanel2d.Index.X].ActionPerformed();
             }
             base.Update();
         }
+    }
+    public PickedCards PickedCards {
+        get {return _pickedCards;}
+    }
+    public CardStack CardStack {
+        get {return _cardStack;}
+    }
+    public Difficulty Difficulty {
+        get {return _difficulty;}
     }
 }

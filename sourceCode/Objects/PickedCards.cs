@@ -28,7 +28,19 @@ public class PickedCards : IPanel
     {
         throw new NotImplementedException();
     }
-
+    public void AddCard(Card card) {
+        _pickedCardsList.Add(card);
+    }
+    private Card GetFirstCard() {
+        Card cardCopy = _pickedCardsList[^1].Copy();
+        _pickedCardsList.RemoveAt(_pickedCardsList.Count - 1);
+        return cardCopy;
+    }
+    public Card[] GetAllCards() {
+        Card[] cards =  _pickedCardsList.ToArray();
+        _pickedCardsList.Clear();
+        return cards;
+    }
     public ConsoleColor ForegroundColor {
         get {
              if(_pickedCardsList.Count > 0) {

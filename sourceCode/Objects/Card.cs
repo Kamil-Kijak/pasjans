@@ -14,16 +14,19 @@ public class Card : DrawableObject
         } else {
             _cardColor = ConsoleColor.White;
         }
+        _pattern = new (string.Format(Content.GetCardPattern(symbol), character.ToString().PadRight(2, ' ')), _cardColor, ConsoleColor.Black);
         _symbol = symbol;
         _character = character;
         Showed = showed;
-        _pattern = new (string.Format(Content.GetCardPattern(symbol), character.ToString().PadRight(2, ' ')), _cardColor, ConsoleColor.Black);
-        ForegroundColor = _cardColor;
     }
     public override void Draw(Vector position)
     {
         base.Draw(position);
-        _pattern.Draw(new Vector(position.X + 3, position.Y + 3));
+        if(_showed) 
+            _pattern.Draw(new Vector(position.X + 3, position.Y + 3));
+    }
+    public Card Copy() {
+        return new Card(_symbol, _character, _showed);
     }
     public bool Showed {
         set {
