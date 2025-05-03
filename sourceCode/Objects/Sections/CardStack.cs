@@ -42,24 +42,23 @@ public class CardStack : IPanel
     }
     public void ActionPerformed()
     {
-        if(Content.GetScene(Scenes.GAME_SCENE) is GameScene gameScene) {
-            Card cardToAdd;
-            if(_cardStackList.Count == 0) {
-                ReShuffleCards(gameScene.PickedCards.GetAllCards());
+        GameScene gameScene = Content.GetScene<GameScene>(Scenes.GAME_SCENE);
+        Card cardToAdd;
+        if(_cardStackList.Count == 0) {
+            ReShuffleCards(gameScene.PickedCards.GetAllCards());
+        } else {
+            if(gameScene.Difficulty == Difficulty.EASY) {
+                cardToAdd = GetFirstCard();
+                cardToAdd.Showed = true;
+                gameScene.PickedCards.AddCard(cardToAdd); 
             } else {
-                if(gameScene.Difficulty == Difficulty.EASY) {
+                for (int i = 0; i < 3; i++) {
                     cardToAdd = GetFirstCard();
                     cardToAdd.Showed = true;
-                    gameScene.PickedCards.AddCard(cardToAdd); 
-                } else {
-                    for (int i = 0; i < 3; i++) {
-                        cardToAdd = GetFirstCard();
-                        cardToAdd.Showed = true;
-                        gameScene.PickedCards.AddCard(cardToAdd);
-                        if(_cardStackList.Count == 0) {
-                            break;
-                        } 
-                    }
+                    gameScene.PickedCards.AddCard(cardToAdd);
+                    if(_cardStackList.Count == 0) {
+                        break;
+                    } 
                 }
             }
         }

@@ -5,7 +5,7 @@ public enum Objects {
     CARD_BACK = 2,
     HEART = 3,
     DIAMOND = 4,
-    SPADEL = 5,
+    SPADE = 5,
     TREFL = 6
 
 }

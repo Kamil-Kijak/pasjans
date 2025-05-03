@@ -1,5 +1,5 @@
 
-public class Text : DrawableObject {
+public class Text : DrawableObject, IPanel {
     public Text(string[] linesOfText) : base(string.Join("\n", linesOfText)) {
 
     }
@@ -40,6 +40,12 @@ public class Text : DrawableObject {
         }
         Console.ResetColor();
     }
+
+    public void ActionPerformed()
+    {
+        throw new NotImplementedException();
+    }
+
     public new string[] Lines {
         set {
             _lines = value;

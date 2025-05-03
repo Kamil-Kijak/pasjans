@@ -7,14 +7,14 @@ public class DrawableObject {
     protected ConsoleColor _foregroundColor;
     protected ConsoleColor _backgroundColor;
     public DrawableObject(string lines) {
-        _lines = lines.Split("\n");
+        _lines = lines.Split(["\r\n", "\n"], StringSplitOptions.None);
         _width = _lines[0].Length;
         _height = _lines.Length;
         _foregroundColor = ConsoleColor.White;
         _backgroundColor = ConsoleColor.Black;
     }
     public DrawableObject(string lines, ConsoleColor foregroundColor, ConsoleColor backgroundColor) {
-        _lines = lines.Split("\n");
+        _lines = lines.Split(["\r\n", "\n"], StringSplitOptions.None);
         _width = _lines[0].Length;
         _height = _lines.Length;
         _foregroundColor = foregroundColor;
@@ -75,7 +75,7 @@ public class DrawableObject {
     }
     public string Lines {
         set {
-            _lines = value.Split("\n");
+            _lines = value.Split(["\r\n", "\n"], StringSplitOptions.None);
             _width = _lines[0].Length;
             _height = _lines.Length;
         }

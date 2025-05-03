@@ -50,7 +50,7 @@ public class Content {
   █████
    ███  
     █"},
- {Objects.SPADEL, 
+ {Objects.SPADE, 
 @"    █ 
   █████
  ███████
@@ -58,11 +58,11 @@ public class Content {
     █"
  },
  {Objects.TREFL,
-@"   ████
-  ██████
-███   ████
- ████████
-    █
+@"   ███
+   ███
+ ███████
+ ███████
+    █  
 "}
         };
     private static Dictionary<string, string> _cardPatterns = new(){
@@ -157,6 +157,13 @@ public class Content {
     }
     public static BaseScene GetScene(Scenes value) {
         return _scenes[value];
+    }
+    public static T GetScene<T>(Scenes value) {
+        if(_scenes[value] is T scene) {
+            return scene;
+        } else {
+            throw new Exception("Failed to parse a scene");
+        }
     }
     public static void SetScene(Scenes key, BaseScene value) {
         _scenes.Add(key, value);

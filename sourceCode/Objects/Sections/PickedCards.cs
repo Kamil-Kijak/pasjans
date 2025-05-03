@@ -12,9 +12,11 @@ public class PickedCards : IPanel
 
     public void Draw(Vector position)
     {
-        if(_pickedCardsList.Count > 0) {
-            _pickedCardsList[^1].Draw(position);
-        } else {
+        for(int i = Math.Min(3, _pickedCardsList.Count);i>0;i--) {
+            _pickedCardsList[_pickedCardsList.Count - i].Draw(new Vector(position.X + (i - 1) * 4, position.Y));
+        }
+        if(_pickedCardsList.Count == 0) {
+
             _pickedCardsPlace.Draw(position);
         }
     }
