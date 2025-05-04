@@ -47,7 +47,13 @@ public class DrawableObject {
     public virtual void Draw(Vector position) {
         Console.ForegroundColor = _foregroundColor;
         Console.BackgroundColor = _backgroundColor;
+        if(position.X >= Console.WindowWidth) {
+            position.X = Console.WindowWidth - 1;
+        }
         for (int i = 0;i<_lines.Length;i++) {
+            if(position.Y + i >= Console.WindowHeight) {
+                position.Y = Console.WindowHeight - 1 - i;
+            }
             Console.SetCursorPosition((int)position.X, (int)position.Y + i);
             Console.WriteLine(_lines[i]);
         }

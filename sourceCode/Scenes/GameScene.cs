@@ -54,6 +54,9 @@ public class GameScene : BaseScene {
     public CardStack CardStack {
         get {return _cardStack;}
     }
+    public Dictionary<EndStacks, EndStack> EndStacksDict {
+        get {return _endStacks;}
+    }
     public Difficulty Difficulty {
         get {return _difficulty;}
     }
