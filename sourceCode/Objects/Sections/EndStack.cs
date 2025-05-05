@@ -3,9 +3,16 @@
 public class EndStack : IPanel {
     private DrawableObject _cardBody;
     private DrawableObject _symbol;
-    public EndStack(Objects cardSymbol) {
+    private List<Card> _cards;
+    private char _character;
+    private bool _completed;
+    public static string[] _symbolOrder = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+    public EndStack(Objects cardSymbol, char character) {
         _cardBody = new(string.Format(Content.GetTextObject(Objects.CARD_BODY), "  ", " "), ConsoleColor.DarkGray, ConsoleColor.Black);
         _symbol = new(Content.GetTextObject(cardSymbol), ConsoleColor.DarkGray, ConsoleColor.Black);
+        _character = character;
+        _cards = new();
+        _completed = false;
     }
 
 
@@ -25,6 +32,18 @@ public class EndStack : IPanel {
     public void Draw(Vector position, AlignX alignX, AlignY alignY)
     {
         Draw(position);
+    }
+    public bool AddCard(Card card) {
+        if(_character == card.Character && !_completed) {
+            if(_symbolOrder[_cards.Count] == card.Symbol) {
+                _cards.Add(card);
+                if(_cards.Count == _symbolOrder.Length) {
+                    _completed = true;
+                }
+                return true;
+            }
+        }
+        return false;
     }
     public ConsoleColor ForegroundColor {
         get {

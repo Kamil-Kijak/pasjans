@@ -1,5 +1,5 @@
 
-public class Text : DrawableObject, IPanel {
+public class Text : DrawableObject {
     public Text(string[] linesOfText) : base(string.Join("\n", linesOfText)) {
 
     }
@@ -21,8 +21,8 @@ public class Text : DrawableObject, IPanel {
         int yPos;
         for (int i = 0;i<_lines.Length;i++) {
             _width = _lines[i].Length;
-            yPos = (int)(position.Y + i - _height * ((int)alignY / 2f));
-            xPos = (int)(position.X - _width * ((int)alignX / 2f));
+            yPos = (int)Math.Floor(position.Y + i - _height * ((int)alignY / 2f));
+            xPos = (int)Math.Ceiling(position.X - _width * ((int)alignX / 2f));
             if(xPos < 0) {
                 xPos = 0;
             }
@@ -39,11 +39,6 @@ public class Text : DrawableObject, IPanel {
             Console.WriteLine(_lines[i]);
         }
         Console.ResetColor();
-    }
-
-    public void ActionPerformed()
-    {
-        throw new NotImplementedException();
     }
 
     public new string[] Lines {

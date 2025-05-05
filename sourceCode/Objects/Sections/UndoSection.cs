@@ -5,12 +5,12 @@ public class UndoSection : IPanel
     private DrawableObject _box;
     private Text _undoText;
     public UndoSection() {
-        _box = DrawManager.CreateBox(18, 5);
+        _box = DrawManager.CreateBox(17, 5);
         _undoText = new("Cofnij ruch");
     }
     public void ActionPerformed()
     {
-        throw new NotImplementedException();
+        
     }
 
     public void Draw(Vector position)

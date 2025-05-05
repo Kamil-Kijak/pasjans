@@ -1,5 +1,5 @@
 
-public class Card : DrawableObject
+public class Card : DrawableObject, IPanel
 {
     private bool _showed;
     private char _character;
@@ -22,11 +22,28 @@ public class Card : DrawableObject
     public override void Draw(Vector position)
     {
         base.Draw(position);
-        if(_showed) 
+        if(_showed)  {
             _pattern.Draw(new Vector(position.X + 3, position.Y + 3));
+        }
+    }
+    public override void Draw(Vector position, AlignX alignX, AlignY alignY)
+    {
+        Draw(position);
     }
     public Card Copy() {
         return new Card(_symbol, _character, _showed);
+    }
+
+    public void ActionPerformed()
+    {
+        
+    }
+
+    public char Character {
+        get {return _character;}
+    }
+    public string Symbol {
+        get {return _symbol;}
     }
     public bool Showed {
         set {
@@ -40,11 +57,18 @@ public class Card : DrawableObject
             }
         }
     }
-    public new ConsoleColor ForegroundColor {
+    public override ConsoleColor ForegroundColor {
         get { return _foregroundColor; }
         set {
             _foregroundColor = value;
             _pattern.ForegroundColor = value;
+        }
+    }
+    public override ConsoleColor BackgroundColor {
+        get { return _backgroundColor; }
+        set {
+            _backgroundColor = value;
+            _pattern.BackgroundColor = value;
         }
     }
 }

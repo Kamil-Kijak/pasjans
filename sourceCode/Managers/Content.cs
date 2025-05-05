@@ -166,7 +166,12 @@ public class Content {
         }
     }
     public static void SetScene(Scenes key, BaseScene value) {
-        _scenes.Add(key, value);
+        if(_scenes.ContainsKey(key)) {
+            _scenes.Remove(key);
+            _scenes[key] = value;
+        } else {
+            _scenes.Add(key, value);
+        }
     }
     public static string AppPath {
         get {return _appPath;}

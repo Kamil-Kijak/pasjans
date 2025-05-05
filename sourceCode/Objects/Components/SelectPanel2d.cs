@@ -22,15 +22,16 @@ public class SelectPanel2d {
             }
         }
     }
-    public void Draw(Vector position, bool drawSelection, int[] widthMargin, int hightMargin = 0, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP) {
+    public void Draw(Vector position, bool drawSelection, int[,] widthMargin, int hightMargin = 0, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP) {
         Vector separator = new Vector(0, 0);
+        _objects[(int)_index.Y, (int)_index.X].ForegroundColor = _previrousColors[(int)_index.Y, (int)_index.X];
         SetPrevirousColors();
         if(drawSelection)
             _objects[(int)_index.Y, (int)_index.X].ForegroundColor = _changeColor;
         for (int i = 0; i < _objects.GetLength(0); i++) {
             for(int j = 0;j<_objects.GetLength(1);j++) {
                 _objects[i, j].Draw(new Vector(position.X + separator.X, position.Y + separator.Y), alignX, alignY);
-                separator.X+= _objects[i, j].Width + widthMargin[j + i * (_objects.GetLength(1) - 1)];
+                separator.X+= _objects[i, j].Width + widthMargin[i, j];
             }
             separator.Y+= _objects[i, 0].Height + hightMargin;
             separator.X = 0;

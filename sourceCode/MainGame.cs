@@ -13,9 +13,8 @@ internal class MainGame
         Content.SetScene(Scenes.TITLE_SCENE, new TitleScene());
         Content.SetScene(Scenes.GAME_SCENE, new GameScene());
         Content.SetScene(Scenes.WIN_SCENE, new WinScene());
-        Content.SetScene(Scenes.LOSE_SCENE, new LoseScene());
         
-        Content.GetScene(Scenes.TITLE_SCENE).Update();
-        
+        Content.GetScene(Scenes.TITLE_SCENE).SceneActive = true;
+        Console.Clear();
     }
 }

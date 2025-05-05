@@ -23,7 +23,7 @@ public class DrawableObject {
     public virtual void Draw(Vector position, AlignX alignX, AlignY alignY) {
         Console.ForegroundColor = _foregroundColor;
         Console.BackgroundColor = _backgroundColor;
-        int xPos = (int)(position.X - _width * ((int)alignX / 2f));
+        int xPos = (int)Math.Ceiling(position.X - _width * ((int)alignX / 2f));
         int yPos;
         if(xPos < 0) {
             xPos = 0;
@@ -32,7 +32,7 @@ public class DrawableObject {
             xPos = Console.WindowWidth - 1;
         }
         for (int i = 0;i<_lines.Length;i++) {
-            yPos = (int)(position.Y + i - _height * ((int)alignY / 2f));
+            yPos = (int)Math.Floor(position.Y + i - _height * ((int)alignY / 2f));
             if(yPos < 0) {
                 yPos = 0;
             }

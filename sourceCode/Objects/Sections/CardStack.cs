@@ -63,7 +63,7 @@ public class CardStack : IPanel
             }
         }
     }
-    private Card GetFirstCard() {
+    public Card GetFirstCard() {
         Card cardCopy = _cardStackList[^1].Copy();
         _cardStackList.RemoveAt(_cardStackList.Count - 1);
         return cardCopy;

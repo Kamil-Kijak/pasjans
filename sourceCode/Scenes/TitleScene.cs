@@ -56,8 +56,7 @@ public class TitleScene : BaseScene {
     {
         base.Update();
         LoadLeaderBoard();
-        Scenes scene;
-        while(true) {
+        while(_sceneActive) {
             switch(_states) {
                 case 0:
                     if(ChoosenState(_gameOptionSelect)) {
@@ -70,11 +69,10 @@ public class TitleScene : BaseScene {
                             _states = 1;
                         break;
                         case 2:
-                        Console.Clear();
                         return;
                     }
                 }
-        base.Update();
+                base.Update();
                 break;
                 case 1:
                     if(ChoosenState(_leaderBoardExit)) {
@@ -86,13 +84,15 @@ public class TitleScene : BaseScene {
                     if(ChoosenState(_difficultySelect)) {
                         switch(_difficultySelect.Index) {
                             case 0:
-                                scene = Scenes.GAME_SCENE;
                                 _selectedDifficulty = Difficulty.EASY;
-                                goto LOADSCENE;
+                                SceneActive = false;
+                                Content.GetScene(Scenes.GAME_SCENE).SceneActive = true;
+                               break;
                             case 1:
                                 _selectedDifficulty = Difficulty.HARD;
-                                scene = Scenes.GAME_SCENE;
-                                goto LOADSCENE;
+                                SceneActive = false;
+                                Content.GetScene(Scenes.GAME_SCENE).SceneActive = true;
+                                break;
                             case 2:
                             _states = 0;
                             break;
@@ -103,8 +103,6 @@ public class TitleScene : BaseScene {
                 break;
             }
         }
-        LOADSCENE:
-            LoadScene(scene);
 
     }
     internal bool ChoosenState(SelectPanel  selectPanel) {
