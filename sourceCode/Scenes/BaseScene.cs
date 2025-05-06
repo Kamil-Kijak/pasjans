@@ -1,7 +1,7 @@
 
 public abstract class BaseScene {
     protected bool _sceneActive = false;
-    protected virtual void DrawComponets() {
+    public virtual void DrawComponets() {
         Console.Clear();
     }
     public virtual void Update() {

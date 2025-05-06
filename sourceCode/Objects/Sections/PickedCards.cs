@@ -1,29 +1,25 @@
 
 
 
-public class PickedCards : IPanel
+public class PickedCards : StateObject, IPanel
 {
-    private List<Card> _pickedCardsList;
+    public List<Card> _pickedCardsList;
     private DrawableObject _pickedCardsPlace;
-    public PickedCards() {
+    public PickedCards() : base(3) {
         _pickedCardsList = new();
         _pickedCardsPlace = DrawManager.CreateBox(15, 11);
+        ActualState = _pickedCardsList;
     }
 
-    public void Draw(Vector position)
+    public void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)
     {
         for(int i = Math.Min(3, _pickedCardsList.Count);i>0;i--) {
-            _pickedCardsList[_pickedCardsList.Count - i].Draw(new Vector(position.X + (i - 1) * 4, position.Y));
+            _pickedCardsList[_pickedCardsList.Count - i].Draw(new Vector(position.X + (i - 1) * 4, position.Y), alignX, alignY);
         }
         if(_pickedCardsList.Count == 0) {
 
-            _pickedCardsPlace.Draw(position);
+            _pickedCardsPlace.Draw(position, alignX, alignY);
         }
-    }
-
-    public void Draw(Vector position, AlignX alignX, AlignY alignY)
-    {
-        Draw(position);
     }
 
     public void ActionPerformed()
@@ -43,6 +39,7 @@ public class PickedCards : IPanel
         _pickedCardsList.Clear();
         return cards;
     }
+
     public ConsoleColor ForegroundColor {
         get {
              if(_pickedCardsList.Count > 0) {

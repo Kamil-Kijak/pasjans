@@ -13,13 +13,7 @@ public class ExitSection : IPanel {
         Content.GetScene(Scenes.GAME_SCENE).SceneActive = false;
     }
 
-    public void Draw(Vector position)
-    {
-        position.Y+= 5;
-        _text.Draw(position);
-    }
-
-    public void Draw(Vector position, AlignX alignX, AlignY alignY)
+    public void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)
     {
         position.Y+= 5;
         _text.Draw(position, alignX, alignY);

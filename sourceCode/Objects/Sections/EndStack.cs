@@ -21,17 +21,12 @@ public class EndStack : IPanel {
         
     }
 
-    public void Draw(Vector position)
+    public void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)
     {
-        _cardBody.Draw(position);
+        _cardBody.Draw(position, alignX, alignY);
         position.X += 3;
         position.Y += 3;
-        _symbol.Draw(position);
-    }
-
-    public void Draw(Vector position, AlignX alignX, AlignY alignY)
-    {
-        Draw(position);
+        _symbol.Draw(position, alignX, alignY);
     }
     public bool AddCard(Card card) {
         if(_character == card.Character && !_completed) {

@@ -1,12 +1,12 @@
 
 
-public class CardStack : IPanel
+public class CardStack : StateObject, IPanel
 {
     private List<Card> _cardStackList;
     private DrawableObject _cardStackPlace;
     private static Random _random = new Random();
 
-    public CardStack() {
+    public CardStack() : base(3) {
         _cardStackList = new();
         _cardStackPlace = DrawManager.CreateBox(15, 11);
         char[] characters = {'♥', '♦', '♠', '♣'};
@@ -17,6 +17,7 @@ public class CardStack : IPanel
             }
         }
         Shuffle(_cardStackList);
+        ActualState = _cardStackList;
     }
     private void Shuffle(List<Card> cards) {
         // shuffle algoritm
@@ -27,18 +28,13 @@ public class CardStack : IPanel
         }
     }
 
-    public void Draw(Vector position)
+    public void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)
     {
         if(_cardStackList.Count > 0) {
-            _cardStackList[^1].Draw(position);
+            _cardStackList[^1].Draw(position, alignX, alignY);
         } else {
-            _cardStackPlace.Draw(position);
+            _cardStackPlace.Draw(position, alignX, alignY);
         }
-    }
-
-    public void Draw(Vector position, AlignX alignX, AlignY alignY)
-    {
-        Draw(position);
     }
     public void ActionPerformed()
     {
@@ -47,6 +43,7 @@ public class CardStack : IPanel
         if(_cardStackList.Count == 0) {
             ReShuffleCards(gameScene.PickedCards.GetAllCards());
         } else {
+            gameScene.UndoSection.AddMove();
             if(gameScene.Difficulty == Difficulty.EASY) {
                 cardToAdd = GetFirstCard();
                 cardToAdd.Showed = true;
@@ -70,10 +67,12 @@ public class CardStack : IPanel
     }
     private void ReShuffleCards(Card[] pickedCards) {
         foreach (Card card in pickedCards) {
+            card.Showed = false;
             _cardStackList.Add(card);
         }
         Shuffle(_cardStackList);
     }
+
     public List<Card> CardStackList {
         get {
             return _cardStackList;

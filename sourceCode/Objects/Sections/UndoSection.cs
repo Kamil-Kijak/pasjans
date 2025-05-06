@@ -2,29 +2,63 @@
 
 public class UndoSection : IPanel
 {
+    private Text _movesText;
     private DrawableObject _box;
     private Text _undoText;
+    private int _moves;
+    private int _undoMoves;
     public UndoSection() {
         _box = DrawManager.CreateBox(17, 5);
-        _undoText = new("Cofnij ruch");
+        _undoText = new("brak cofania");
+        _movesText = new("Ruchy: 0");
+        _moves = 0;
+        _undoMoves = 0;
     }
     public void ActionPerformed()
     {
-        
+        if(_undoMoves != 0) {
+            LoadState();
+        }
     }
 
-    public void Draw(Vector position)
+    public void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)
     {
-        _box.Draw(position, AlignX.LEFT, AlignY.TOP);
+        if(_undoMoves != 0) {
+            _undoText.Lines = ["cofnij ruch"];
+        } else {
+            _undoText.Lines = ["brak cofania"];
+        }
+        _movesText.Draw(new Vector(51, 1), AlignX.CENTER, AlignY.TOP);
+        if(_undoMoves != 0) {
+            position.Y+= 4;
+            _box.Draw(position, alignX, alignY);
+            position.X += _box.Width / 2;
+            position.Y += _box.Height / 2;
+            _undoText.Draw(position, AlignX.CENTER, AlignY.CENTER);
+        }
     }
-
-    public void Draw(Vector position, AlignX alignX, AlignY alignY)
-    {
-        position.Y+= 4;
-        _box.Draw(position, alignX, alignY);
-        position.X += _box.Width / 2;
-        position.Y += _box.Height / 2;
-        _undoText.Draw(position, AlignX.CENTER, AlignY.CENTER);
+    public void AddMove() {
+        Moves++;
+        if(_undoMoves < 3) {
+            _undoMoves++;
+        }
+        Content.GetScene<GameScene>(Scenes.GAME_SCENE).CardStack.SaveState();
+        Content.GetScene<GameScene>(Scenes.GAME_SCENE).PickedCards.SaveState();
+    }
+    private void LoadState() {
+        _undoMoves--;
+        Moves--;
+        Content.GetScene<GameScene>(Scenes.GAME_SCENE).CardStack.LoadState();
+        Content.GetScene<GameScene>(Scenes.GAME_SCENE).PickedCards.LoadState();
+    }
+    private int Moves {
+        get{
+            return _moves;
+        }
+        set{
+            _moves = value;
+            _movesText.Lines = [string.Format("Ruchy: {0}", _moves)];
+        }
     }
     public ConsoleColor ForegroundColor {
          get {

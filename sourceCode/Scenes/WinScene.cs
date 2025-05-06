@@ -3,7 +3,7 @@
 public class WinScene : BaseScene {
 
 
-    protected override void DrawComponets()
+    public override void DrawComponets()
     {
         base.DrawComponets();
 

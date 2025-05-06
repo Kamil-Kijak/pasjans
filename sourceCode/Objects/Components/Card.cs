@@ -19,16 +19,12 @@ public class Card : DrawableObject, IPanel
         _character = character;
         Showed = showed;
     }
-    public override void Draw(Vector position)
+    public override void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)
     {
-        base.Draw(position);
+        base.Draw(position, alignX, alignY);
         if(_showed)  {
-            _pattern.Draw(new Vector(position.X + 3, position.Y + 3));
+            _pattern.Draw(new Vector(position.X + 3, position.Y + 3), alignX, alignY);
         }
-    }
-    public override void Draw(Vector position, AlignX alignX, AlignY alignY)
-    {
-        Draw(position);
     }
     public Card Copy() {
         return new Card(_symbol, _character, _showed);
@@ -46,6 +42,7 @@ public class Card : DrawableObject, IPanel
         get {return _symbol;}
     }
     public bool Showed {
+        get {return _showed;}
         set {
             _showed = value;
             if(_showed) {

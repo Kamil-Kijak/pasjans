@@ -1,7 +1,5 @@
 
 public class GameScene : BaseScene {
-    private int _moves;
-    private Text _movesText;
     private Difficulty _difficulty;
     private CardStack _cardStack;
     private PickedCards _pickedCards;
@@ -14,7 +12,6 @@ public class GameScene : BaseScene {
     private IPanel[,] _gameObjects;
 
     public GameScene() {
-        _moves = 0;
         _pickedCards = new();
         _cardStack = new();
         _undoSection = new();
@@ -41,17 +38,15 @@ public class GameScene : BaseScene {
             }
         };
         _selectPanel2d = new(_gameObjects, ConsoleColor.DarkYellow, new Vector(0, 0));
-        _movesText = new("Ruchy: 0");
     }
 
-    protected override void DrawComponets()
+    public override void DrawComponets()
     {
         base.DrawComponets();
-        _selectPanel2d.Draw(new Vector(1, 1), true, new int[,]{
+        _selectPanel2d.Draw(new Vector(1, 1), !_cardsColumns.Any(column => column.Selected), new int[,]{
             {6, 9, 1, 6, 6, 6, 2, 6},
             {6, 6, 6, 6, 6, 6, 2, 0}
             }, 1);
-        _movesText.Draw(new Vector(51, 1), AlignX.CENTER, AlignY.TOP);
     }
     public override void Update()
     {
@@ -75,17 +70,13 @@ public class GameScene : BaseScene {
     public RestartSection RestartSection {
         get {return _restartSection;}
     }
+    public UndoSection UndoSection {
+        get {return _undoSection;}
+    }
     public Dictionary<EndStacks, EndStack> EndStacksDict {
         get {return _endStacks;}
     }
     public Difficulty Difficulty {
         get {return _difficulty;}
-    }
-    public int Moves {
-        get {return _moves;}
-        set {
-            _moves = value;
-            _movesText.Lines = ["Ruchy: " + _moves.ToString()];
-        }
     }
 }

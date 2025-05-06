@@ -31,7 +31,7 @@ public class TitleScene : BaseScene {
         _scores = new (["Nie masz jeszcze żadnego", "wyniku!"]);
     }
 
-    protected override void DrawComponets()
+    public override void DrawComponets()
     {
         base.DrawComponets();
         _title.Draw(new Vector(Console.WindowWidth / 2, 0), AlignX.CENTER, AlignY.TOP);
@@ -44,7 +44,7 @@ public class TitleScene : BaseScene {
             case 1:
                 _leaderBoardBox.Draw(new Vector(Console.WindowWidth / 2, 11), AlignX.CENTER, AlignY.TOP);
                 _leaderBoardExit.Draw(new Vector(Console.WindowWidth / 2, 42), 0, AlignX.CENTER);  
-                _scores.Draw(new Vector(Console.WindowWidth / 2, 13), AlignX.CENTER, AlignY.TOP); 
+                _scores.Draw(new Vector(Console.WindowWidth / 2.5f, 13), AlignX.LEFT, AlignY.TOP); 
             break;
             case 2:
                 _gameOptionSelectBox.Draw(new Vector(Console.WindowWidth / 2, 11), AlignX.CENTER, AlignY.TOP);
