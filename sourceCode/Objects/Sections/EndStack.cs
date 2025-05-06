@@ -1,13 +1,13 @@
 
 
-public class EndStack : IPanel {
+public class EndStack : StateObject ,IPanel {
     private DrawableObject _cardBody;
     private DrawableObject _symbol;
     private List<Card> _cards;
     private char _character;
     private bool _completed;
     public static string[] _symbolOrder = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-    public EndStack(Objects cardSymbol, char character) {
+    public EndStack(Objects cardSymbol, char character): base(3) {
         _cardBody = new(string.Format(Content.GetTextObject(Objects.CARD_BODY), "  ", " "), ConsoleColor.DarkGray, ConsoleColor.Black);
         _symbol = new(Content.GetTextObject(cardSymbol), ConsoleColor.DarkGray, ConsoleColor.Black);
         _character = character;

@@ -6,10 +6,10 @@ public abstract class StateObject {
         _stateManager = new(numberOfStates);
         _actualState = new();
     }
-    public void SaveState() {
+    public virtual void SaveState() {
         _stateManager.SaveState(_actualState);
     }
-    public void LoadState() {
+    public virtual void LoadState() {
         _actualState.Clear();
         _actualState.AddRange(_stateManager.LoadPrevirousState());
     }

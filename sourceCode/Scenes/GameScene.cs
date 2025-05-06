@@ -14,7 +14,6 @@ public class GameScene : BaseScene {
     public GameScene() {
         _pickedCards = new();
         _cardStack = new();
-        _undoSection = new();
         _restartSection = new();
         _exitSection = new();
         _endStacks = new(){
@@ -27,6 +26,7 @@ public class GameScene : BaseScene {
         for (int i = 0; i < 7; i++) {
             _cardsColumns[i] = new CardColumn(_cardsColumns.Length - i, _cardStack);
         }
+        _undoSection = new(this);
         _gameObjects = new IPanel[,] {
             {
                 _cardStack, _pickedCards, _undoSection, _endStacks[EndStacks.HEART],
@@ -72,6 +72,9 @@ public class GameScene : BaseScene {
     }
     public UndoSection UndoSection {
         get {return _undoSection;}
+    }
+    public CardColumn[] CardColumns {
+        get {return _cardsColumns;}
     }
     public Dictionary<EndStacks, EndStack> EndStacksDict {
         get {return _endStacks;}

@@ -19,6 +19,13 @@ public class CardStack : StateObject, IPanel
         Shuffle(_cardStackList);
         ActualState = _cardStackList;
     }
+    public override void LoadState()
+    {
+        _cardStackList.Clear();
+        foreach (Card card in _stateManager.LoadPrevirousState()) {
+            _cardStackList.Add(card.Copy());
+        }
+    }
     private void Shuffle(List<Card> cards) {
         // shuffle algoritm
         int j;

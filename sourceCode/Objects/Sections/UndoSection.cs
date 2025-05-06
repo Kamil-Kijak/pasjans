@@ -5,14 +5,25 @@ public class UndoSection : IPanel
     private Text _movesText;
     private DrawableObject _box;
     private Text _undoText;
+    private StateObject[] _stateObjects;
     private int _moves;
     private int _undoMoves;
-    public UndoSection() {
+    public UndoSection(GameScene gameScene) {
         _box = DrawManager.CreateBox(17, 5);
         _undoText = new("brak cofania");
         _movesText = new("Ruchy: 0");
         _moves = 0;
         _undoMoves = 0;
+        _stateObjects = new StateObject[13];
+        for (int i = 0;i<7;i++) {
+            _stateObjects[i] = gameScene.CardColumns[i];
+        }
+        _stateObjects[7] = gameScene.CardStack;
+        _stateObjects[8] = gameScene.PickedCards;
+        _stateObjects[9] = gameScene.EndStacksDict[EndStacks.HEART];
+        _stateObjects[10] = gameScene.EndStacksDict[EndStacks.DIAMOND];
+        _stateObjects[11] = gameScene.EndStacksDict[EndStacks.SPADE];
+        _stateObjects[12] = gameScene.EndStacksDict[EndStacks.TREFL];
     }
     public void ActionPerformed()
     {
@@ -42,14 +53,16 @@ public class UndoSection : IPanel
         if(_undoMoves < 3) {
             _undoMoves++;
         }
-        Content.GetScene<GameScene>(Scenes.GAME_SCENE).CardStack.SaveState();
-        Content.GetScene<GameScene>(Scenes.GAME_SCENE).PickedCards.SaveState();
+        foreach (StateObject obj in _stateObjects) {
+            obj.SaveState();
+        }
     }
     private void LoadState() {
         _undoMoves--;
         Moves--;
-        Content.GetScene<GameScene>(Scenes.GAME_SCENE).CardStack.LoadState();
-        Content.GetScene<GameScene>(Scenes.GAME_SCENE).PickedCards.LoadState();
+        foreach (StateObject obj in _stateObjects) {
+            obj.LoadState();
+        }
     }
     private int Moves {
         get{

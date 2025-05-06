@@ -1,11 +1,11 @@
 
 
-public class CardColumn : IPanel {
+public class CardColumn : StateObject,IPanel {
     private List<Card> _cards;
     private DrawableObject _cardPlace;
     private bool _selected = false;
     private int _selectIndex;
-    public CardColumn(int cardsNumber, CardStack cardStack) {
+    public CardColumn(int cardsNumber, CardStack cardStack) : base(3) {
         _cards = new();
         _cardPlace = new DrawableObject(Content.GetTextObject(Objects.CARD_BODY));
         Card cardToAdd;
