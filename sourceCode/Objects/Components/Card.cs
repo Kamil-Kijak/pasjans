@@ -41,6 +41,9 @@ public class Card : DrawableObject, IPanel
     public string Symbol {
         get {return _symbol;}
     }
+    public ConsoleColor CardColor {
+        get {return _cardColor;}
+    }
     public bool Showed {
         get {return _showed;}
         set {

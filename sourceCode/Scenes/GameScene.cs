@@ -10,6 +10,7 @@ public class GameScene : BaseScene {
     private Dictionary<EndStacks, EndStack> _endStacks;
     private CardColumn[] _cardsColumns;
     private IPanel[,] _gameObjects;
+    private ICardContainer[] _cardContainers;
 
     public GameScene() {
         _pickedCards = new();
@@ -23,8 +24,14 @@ public class GameScene : BaseScene {
             {EndStacks.TREFL, new EndStack(Objects.TREFL, '♣')}
         };
         _cardsColumns = new CardColumn[7];
+        _cardContainers = new ICardContainer[11];
+        _cardContainers[0] = _endStacks[EndStacks.HEART];
+        _cardContainers[1] = _endStacks[EndStacks.DIAMOND];
+        _cardContainers[2] = _endStacks[EndStacks.SPADE];
+        _cardContainers[3] = _endStacks[EndStacks.TREFL];
         for (int i = 0; i < 7; i++) {
             _cardsColumns[i] = new CardColumn(_cardsColumns.Length - i, _cardStack);
+            _cardContainers[i + 4] = _cardsColumns[i];
         }
         _undoSection = new(this);
         _gameObjects = new IPanel[,] {
@@ -67,14 +74,14 @@ public class GameScene : BaseScene {
     public CardStack CardStack {
         get {return _cardStack;}
     }
-    public RestartSection RestartSection {
-        get {return _restartSection;}
-    }
     public UndoSection UndoSection {
         get {return _undoSection;}
     }
     public CardColumn[] CardColumns {
         get {return _cardsColumns;}
+    }
+    public ICardContainer[] CardContainers {
+        get {return _cardContainers;}
     }
     public Dictionary<EndStacks, EndStack> EndStacksDict {
         get {return _endStacks;}

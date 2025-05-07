@@ -24,13 +24,16 @@ public class SelectPanel2d {
     }
     public void Draw(Vector position, bool drawSelection, int[,] widthMargin, int hightMargin = 0, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP) {
         Vector separator = new Vector(0, 0);
-        _objects[(int)_index.Y, (int)_index.X].ForegroundColor = _previrousColors[(int)_index.Y, (int)_index.X];
         SetPrevirousColors();
-        if(drawSelection)
-            _objects[(int)_index.Y, (int)_index.X].ForegroundColor = _changeColor;
         for (int i = 0; i < _objects.GetLength(0); i++) {
             for(int j = 0;j<_objects.GetLength(1);j++) {
-                _objects[i, j].Draw(new Vector(position.X + separator.X, position.Y + separator.Y), alignX, alignY);
+                if(i == _index.Y && j == _index.X && drawSelection) {
+                    _objects[i, j].ForegroundColor = _changeColor;
+                    _objects[i, j].Draw(new Vector(position.X + separator.X, position.Y + separator.Y), alignX, alignY);
+                    _objects[i, j].ForegroundColor = _previrousColors[i, j];
+                } else {
+                    _objects[i, j].Draw(new Vector(position.X + separator.X, position.Y + separator.Y), alignX, alignY);
+                }
                 separator.X+= _objects[i, j].Width + widthMargin[i, j];
             }
             separator.Y+= _objects[i, 0].Height + hightMargin;
@@ -43,28 +46,24 @@ public class SelectPanel2d {
             case ConsoleKey.Enter:
             return ChooseState.CHOOSEN;
             case ConsoleKey.W:
-                _objects[(int)_index.Y, (int)_index.X].ForegroundColor = _previrousColors[(int)_index.Y, (int)_index.X];
                 _index.Add(0, -1);
                 if(_index.Y < 0) {
                     _index.Y = _objects.GetLength(0) - 1;
                 }
             return ChooseState.CHANGED;
             case ConsoleKey.S:
-                _objects[(int)_index.Y, (int)_index.X].ForegroundColor = _previrousColors[(int)_index.Y, (int)_index.X];
                 _index.Add(0, 1);
                 if(_index.Y > _objects.GetLength(0) - 1) {
                     _index.Y = 0;
                 }
             return ChooseState.CHANGED;
             case ConsoleKey.A:
-                _objects[(int)_index.Y, (int)_index.X].ForegroundColor = _previrousColors[(int)_index.Y, (int)_index.X];
                 _index.Add(-1, 0);
                 if(_index.X < 0) {
                     _index.X = _objects.GetLength(1) - 1;
                 }
             return ChooseState.CHANGED;
             case ConsoleKey.D:
-                _objects[(int)_index.Y, (int)_index.X].ForegroundColor = _previrousColors[(int)_index.Y, (int)_index.X];
                 _index.Add(1, 0);
                 if(_index.X > _objects.GetLength(1) - 1) {
                     _index.X = 0;
@@ -76,10 +75,5 @@ public class SelectPanel2d {
     }
     public Vector Index {
         get { return _index; }
-        set { 
-            _objects[(int)_index.Y, (int)_index.X].ForegroundColor = _previrousColors[(int)_index.Y, (int)_index.X];
-            _index = value;
-            _objects[(int)_index.Y, (int)_index.X].ForegroundColor = _changeColor;
-            }
     }
 }

@@ -24,15 +24,24 @@ public class PickedCards : StateObject, IPanel
 
     public void ActionPerformed()
     {
-        throw new NotImplementedException();
+        if(_pickedCardsList.Count != 0) {
+            Card[] cardsToMove = [_pickedCardsList[^1]];
+            GameScene gameScene = Content.GetScene<GameScene>(Scenes.GAME_SCENE);
+            foreach (ICardContainer cardContainer in gameScene.CardContainers) {
+                if(cardContainer.IsCardsBeAdded(cardsToMove)) {
+                    gameScene.UndoSection.AddMove();
+                    cardContainer.AddToStack(cardsToMove);
+                    foreach (Card card in cardsToMove) {
+                        _pickedCardsList.Remove(card);
+                    }
+                    break;
+                }
+            }
+            
+        }
     }
     public void AddCard(Card card) {
         _pickedCardsList.Add(card);
-    }
-    private Card GetFirstCard() {
-        Card cardCopy = _pickedCardsList[^1].Copy();
-        _pickedCardsList.RemoveAt(_pickedCardsList.Count - 1);
-        return cardCopy;
     }
     public Card[] GetAllCards() {
         Card[] cards =  _pickedCardsList.ToArray();

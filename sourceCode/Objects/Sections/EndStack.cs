@@ -1,6 +1,6 @@
 
 
-public class EndStack : StateObject ,IPanel {
+public class EndStack : StateObject ,IPanel, ICardContainer {
     private DrawableObject _cardBody;
     private DrawableObject _symbol;
     private List<Card> _cards;
@@ -13,6 +13,7 @@ public class EndStack : StateObject ,IPanel {
         _character = character;
         _cards = new();
         _completed = false;
+        ActualState = _cards;
     }
 
 
@@ -23,39 +24,68 @@ public class EndStack : StateObject ,IPanel {
 
     public void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)
     {
-        _cardBody.Draw(position, alignX, alignY);
-        position.X += 3;
-        position.Y += 3;
-        _symbol.Draw(position, alignX, alignY);
+        if(_cards.Count == 0) {
+            _cardBody.Draw(position, alignX, alignY);
+            position.X += 3;
+            position.Y += 3;
+            _symbol.Draw(position, alignX, alignY);
+        } else {
+            _cards[^1].Draw(position, alignX, alignY);
+        }
     }
-    public bool AddCard(Card card) {
-        if(_character == card.Character && !_completed) {
-            if(_symbolOrder[_cards.Count] == card.Symbol) {
-                _cards.Add(card);
-                if(_cards.Count == _symbolOrder.Length) {
-                    _completed = true;
+
+    public void AddToStack(Card[] cards)
+    {
+        _cards.Add(cards[0].Copy());
+        if(_cards.Count == _symbolOrder.Length) {
+            _completed = true;
+        }
+    }
+
+    public bool IsCardsBeAdded(Card[] cards)
+    {
+        if(!_completed && _character == cards[0].Character) {
+            if(cards.Length == 1) {
+                if(_symbolOrder[_cards.Count] == cards[0].Symbol) {
+                    return true;
                 }
-                return true;
             }
         }
         return false;
     }
+
     public ConsoleColor ForegroundColor {
         get {
-            return _cardBody.ForegroundColor;
+            if(_cards.Count == 0) {
+                return _cardBody.ForegroundColor;
+            } else {
+                return _cards[^1].ForegroundColor;
+            }
         }
         set {
-            _cardBody.ForegroundColor = value;
-            _symbol.ForegroundColor = value;
+            if(_cards.Count == 0) {
+                _cardBody.ForegroundColor = value;
+                _symbol.ForegroundColor = value;
+            } else {
+                _cards[^1].ForegroundColor = value;
+            }
         }
     }
     public ConsoleColor BackgroundColor {
         get {
-            return _cardBody.BackgroundColor;
+            if(_cards.Count == 0) {
+                return _cardBody.BackgroundColor;
+            } else {
+                return _cards[^1].BackgroundColor;
+            }
         }
         set {
-            _cardBody.BackgroundColor = value;
-            _symbol.BackgroundColor = value;
+            if(_cards.Count == 0) {
+                _cardBody.BackgroundColor = value;
+                _symbol.BackgroundColor = value;
+            } else {
+                _cards[^1].BackgroundColor = value;
+            }
         }
     }
     public int Width {
