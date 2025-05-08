@@ -70,6 +70,13 @@ public class SelectPanel {
             return ChooseState.STILL;
         }
     }
+    public bool IsChoosenState() {
+        if(Listen() == ChooseState.CHOOSEN) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public int Index {
         get { return _index; }
         set { 

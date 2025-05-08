@@ -10,7 +10,7 @@ public class RestartSection : IPanel {
     {
         Content.GetScene(Scenes.GAME_SCENE).SceneActive = false;
         Content.SetScene(Scenes.GAME_SCENE, new GameScene());
-        Content.GetScene(Scenes.GAME_SCENE).SceneActive = true;
+        Content.AddSceneToQueue(Scenes.GAME_SCENE);
     }
 
     public void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)

@@ -1,5 +1,7 @@
 
 
+using System.Text.Json;
+
 public class Content {
     private static readonly string _appPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Pasjans");
     private static Dictionary<Objects, string> _textData = new()
@@ -12,6 +14,14 @@ public class Content {
 |█       ███████       █ █ ██  ███████  █  █ █      █|
 |█      █       █ ██████  █   █       █ █   ██ ██████|
 +----------------------------------------------------+"},
+            {Objects.WINTITLE,
+@"+-------------------------------------------------------------+
+| █        █ █     █ ███████ █████     █     █    █     █     |
+| █   ██   █  █   █  █       █   █    █ █    ██   █    █ █    |
+| █   ██   █   █ █   █   ███ █████   █   █   █ █  █   █   █   |
+|  █ █  █ █     █    █     █ █ █    ███████  █  █ █  ███████  |
+|   █    █      █    ███████ █  █  █       █ █   ██ █       █ |
++-------------------------------------------------------------+"},
             {Objects.CARD_BODY,
 @"+-------------+
 |  {1}          |
@@ -148,6 +158,7 @@ public class Content {
  {0}   {0}"}
     };
     private static Dictionary<Scenes, BaseScene> _scenes =  new();
+    private static List<BaseScene> _scenesToLoadQueue = new();
 
     public static string GetTextObject(Objects value) {
         return _textData[value];
@@ -172,6 +183,46 @@ public class Content {
         } else {
             _scenes.Add(key, value);
         }
+    }
+    public static void AddSceneToQueue(Scenes scene) {
+        _scenesToLoadQueue.Add(GetScene(scene));
+    }
+    public static string[] LoadLeaderBoard(int limit = 26) {
+        if(!File.Exists(Path.Combine(AppPath, "leaderboard.json"))) {
+            File.WriteAllLines(Path.Combine(AppPath, "leaderboard.json"), ["[]"]);
+        } else {
+            string leaderboard = File.ReadAllText(Path.Combine(AppPath, "leaderboard.json"));
+            List<ScoreObject>? list = JsonSerializer.Deserialize<List<ScoreObject>>(leaderboard);
+            if(list != null) {
+                for (int i = 0; i < list.Count; i++) {
+                    if(i >= limit - 1) {
+                        list.RemoveAt(i);
+                    }
+                }
+                list.Sort(new ScoreComparator());
+                string[] rows = new string[list.Count];
+                for (int i = 0; i < list.Count; i++) {
+                    rows[i] = new(string.Format("#{0}    data:{1}    ruchy:{2}", i + 1, list[i].DateTime, list[i].Score));
+                }
+                return rows;
+            }
+        }
+        return [];
+    }
+    public static void AddNewLeaderBoardScore(ScoreObject score) {
+        if(!File.Exists(Path.Combine(AppPath, "leaderboard.json"))) {
+            File.WriteAllLines(Path.Combine(AppPath, "leaderboard.json"), ["[]"]);
+        }
+        string leaderboard = File.ReadAllText(Path.Combine(AppPath, "leaderboard.json"));
+        List<ScoreObject>? list = JsonSerializer.Deserialize<List<ScoreObject>>(leaderboard);
+        list?.Add(score);
+        if(list != null) {
+            string jsonString = JsonSerializer.Serialize(list);
+            File.WriteAllText(Path.Combine(AppPath, "leaderboard.json"), jsonString);
+        }
+    }
+    public static List<BaseScene> ScenesToLoadQueue {
+        get {return _scenesToLoadQueue;}
     }
     public static string AppPath {
         get {return _appPath;}

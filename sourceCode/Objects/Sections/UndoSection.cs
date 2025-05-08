@@ -64,7 +64,7 @@ public class UndoSection : IPanel
             obj.LoadState();
         }
     }
-    private int Moves {
+    public int Moves {
         get{
             return _moves;
         }

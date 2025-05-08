@@ -74,8 +74,9 @@ public class CardStack : StateObject, IPanel
     }
     private void ReShuffleCards(Card[] pickedCards) {
         foreach (Card card in pickedCards) {
-            card.Showed = false;
-            _cardStackList.Add(card);
+            Card cardToAdd = card.Copy();
+            cardToAdd.Showed = false;
+            _cardStackList.Add(cardToAdd);
         }
         Shuffle(_cardStackList);
     }

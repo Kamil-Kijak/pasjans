@@ -39,6 +39,11 @@ public class EndStack : StateObject ,IPanel, ICardContainer {
         _cards.Add(cards[0].Copy());
         if(_cards.Count == _symbolOrder.Length) {
             _completed = true;
+            GameScene gameScene = Content.GetScene<GameScene>(Scenes.GAME_SCENE);
+            if(gameScene.EndStacksDict.All(element => element.Value._completed)) {
+                gameScene.SceneActive = false;
+                Content.AddSceneToQueue(Scenes.WIN_SCENE);
+            }
         }
     }
 

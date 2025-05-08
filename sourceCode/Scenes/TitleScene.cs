@@ -28,7 +28,7 @@ public class TitleScene : BaseScene {
         _difficultySelect = new([
             new Text("--->ŁATWY<---"), new Text("--->TRUDNY<---"), new Text("--->POWRÓT<---")
         ], ConsoleColor.Red, 0);
-        _scores = new (["Nie masz jeszcze żadnego", "wyniku!"]);
+        _scores = new ("Nie masz jeszcze żadnego wyniku!");
     }
 
     public override void DrawComponets()
@@ -55,11 +55,14 @@ public class TitleScene : BaseScene {
     public override void Update()
     {
         base.Update();
-        LoadLeaderBoard();
+        string[] leaderBoard = Content.LoadLeaderBoard();
+        if(leaderBoard.Length > 0) {
+            _scores = new(leaderBoard);
+        }
         while(_sceneActive) {
             switch(_states) {
                 case 0:
-                    if(ChoosenState(_gameOptionSelect)) {
+                    if(_gameOptionSelect.IsChoosenState()) {
                     switch(_gameOptionSelect.Index) {
                         case 0:
                             _states = 2;
@@ -75,23 +78,23 @@ public class TitleScene : BaseScene {
                 base.Update();
                 break;
                 case 1:
-                    if(ChoosenState(_leaderBoardExit)) {
+                    if(_leaderBoardExit.IsChoosenState()) {
                         _states = 0;
                     }
                     base.Update();
                 break;
                 case 2:
-                    if(ChoosenState(_difficultySelect)) {
+                    if(_difficultySelect.IsChoosenState()) {
                         switch(_difficultySelect.Index) {
                             case 0:
                                 _selectedDifficulty = Difficulty.EASY;
                                 SceneActive = false;
-                                Content.GetScene(Scenes.GAME_SCENE).SceneActive = true;
+                                Content.AddSceneToQueue(Scenes.GAME_SCENE);
                                break;
                             case 1:
                                 _selectedDifficulty = Difficulty.HARD;
                                 SceneActive = false;
-                                Content.GetScene(Scenes.GAME_SCENE).SceneActive = true;
+                                Content.AddSceneToQueue(Scenes.GAME_SCENE);
                                 break;
                             case 2:
                             _states = 0;
@@ -104,29 +107,6 @@ public class TitleScene : BaseScene {
             }
         }
 
-    }
-    internal bool ChoosenState(SelectPanel  selectPanel) {
-        if(selectPanel.Listen() == SelectPanel.ChooseState.CHOOSEN) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    private void LoadLeaderBoard() {
-        if(!File.Exists(Path.Combine(Content.AppPath, "leaderboard.json"))) {
-            File.WriteAllLines(Path.Combine(Content.AppPath, "leaderboard.json"), ["[]"]);
-        } else {
-            string leaderboard = File.ReadAllText(Path.Combine(Content.AppPath, "leaderboard.json"));
-            List<ScoreObject>? list = JsonSerializer.Deserialize<List<ScoreObject>>(leaderboard);
-            list?.Sort(new ScoreComparator());
-            if(list != null) {
-                string[] rows = new string[list.Count];
-                for (int i = 0; i < list.Count; i++) {
-                    rows[i] = new(string.Format("#{0}    data:{1}    ruchy:{2}", i + 1, list[i].DateTime, list[i].Score));
-                }
-                _scores = new(rows);
-            }
-        }
     }
     public Difficulty SelectedDifficulty {
         get { return _selectedDifficulty; }
