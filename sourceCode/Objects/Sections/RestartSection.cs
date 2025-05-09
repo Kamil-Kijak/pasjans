@@ -1,16 +1,16 @@
 
 
 public class RestartSection : IPanel {
-    private Text _text;
+    private readonly Text _text;
     public RestartSection() {
         _text = new("Restart");
     }
 
     public void ActionPerformed()
     {
-        Content.GetScene(Scenes.GAME_SCENE).SceneActive = false;
-        Content.SetScene(Scenes.GAME_SCENE, new GameScene());
-        Content.AddSceneToQueue(Scenes.GAME_SCENE);
+        ContentManager.GetScene(Scenes.GAME_SCENE).SceneActive = false;
+        ContentManager.SetScene(Scenes.GAME_SCENE, new GameScene());
+        ContentManager.AddSceneToQueue(Scenes.GAME_SCENE);
     }
 
     public void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)
@@ -22,16 +22,10 @@ public class RestartSection : IPanel {
         get {return _text.ForegroundColor;}
         set {_text.ForegroundColor = value;}
     }
-    public ConsoleColor BackgroundColor {
-        get {return _text.BackgroundColor;}
-        set {_text.BackgroundColor = value;}
-    }
     public int Width {
         get {return _text.Width;}
-        set {_text.Width = value;}
     }
     public int Height {
          get {return _text.Height;}
-        set {_text.Height = value;}
     }
 }

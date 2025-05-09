@@ -1,17 +1,17 @@
 
 
 public class EndStack : StateObject ,IPanel, ICardContainer {
-    private DrawableObject _cardBody;
-    private DrawableObject _symbol;
-    private List<Card> _cards;
-    private char _character;
+    private readonly DrawableObject _cardBody;
+    private readonly DrawableObject _symbol;
+    private readonly List<Card> _cards;
+    private readonly char _character;
     private bool _completed;
     public static string[] _symbolOrder = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
     public EndStack(Objects cardSymbol, char character): base(3) {
-        _cardBody = new(string.Format(Content.GetTextObject(Objects.CARD_BODY), "  ", " "), ConsoleColor.DarkGray, ConsoleColor.Black);
-        _symbol = new(Content.GetTextObject(cardSymbol), ConsoleColor.DarkGray, ConsoleColor.Black);
+        _cardBody = new(string.Format(ContentManager.GetTextObject(Objects.CARD_BODY), "  ", " "), ConsoleColor.DarkGray);
+        _symbol = new(ContentManager.GetTextObject(cardSymbol), ConsoleColor.DarkGray);
         _character = character;
-        _cards = new();
+        _cards = [];
         _completed = false;
         ActualState = _cards;
     }
@@ -39,10 +39,10 @@ public class EndStack : StateObject ,IPanel, ICardContainer {
         _cards.Add(cards[0].Copy());
         if(_cards.Count == _symbolOrder.Length) {
             _completed = true;
-            GameScene gameScene = Content.GetScene<GameScene>(Scenes.GAME_SCENE);
+            GameScene gameScene = ContentManager.GetScene<GameScene>(Scenes.GAME_SCENE);
             if(gameScene.EndStacksDict.All(element => element.Value._completed)) {
                 gameScene.SceneActive = false;
-                Content.AddSceneToQueue(Scenes.WIN_SCENE);
+                ContentManager.AddSceneToQueue(Scenes.WIN_SCENE);
             }
         }
     }
@@ -76,39 +76,14 @@ public class EndStack : StateObject ,IPanel, ICardContainer {
             }
         }
     }
-    public ConsoleColor BackgroundColor {
-        get {
-            if(_cards.Count == 0) {
-                return _cardBody.BackgroundColor;
-            } else {
-                return _cards[^1].BackgroundColor;
-            }
-        }
-        set {
-            if(_cards.Count == 0) {
-                _cardBody.BackgroundColor = value;
-                _symbol.BackgroundColor = value;
-            } else {
-                _cards[^1].BackgroundColor = value;
-            }
-        }
-    }
     public int Width {
         get {
             return _cardBody.Width;
-        }
-        set {
-            _cardBody.Width = value;
-            _symbol.Width = value;
         }
     }
     public int Height {
         get {
             return _cardBody.Height;
-        }
-        set {
-            _cardBody.Height = value;
-            _symbol.Height = value;
         }
     }
 }

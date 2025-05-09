@@ -1,5 +1,5 @@
 
-public class Text : DrawableObject {
+public class Text : DrawableObject, IPanel {
     public Text(string[] linesOfText) : base(string.Join("\n", linesOfText)) {
 
     }
@@ -7,16 +7,9 @@ public class Text : DrawableObject {
         
     }
 
-    public Text(string[] linesOfText, ConsoleColor foregroundColor, ConsoleColor backgroundColor) : base(string.Join("\n", linesOfText),foregroundColor, backgroundColor) {
-
-    }
-    public Text(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor) : base(string.Join("\n", [text]),foregroundColor, backgroundColor) {
-
-    }
     public override void Draw(Vector position, AlignX alignX, AlignY alignY)
     {
         Console.ForegroundColor = _foregroundColor;
-        Console.BackgroundColor = _backgroundColor;
         int xPos;
         int yPos;
         for (int i = 0;i<_lines.Length;i++) {
@@ -39,6 +32,11 @@ public class Text : DrawableObject {
             Console.WriteLine(_lines[i]);
         }
         Console.ResetColor();
+    }
+
+    public void ActionPerformed()
+    {
+        
     }
 
     public new string[] Lines {

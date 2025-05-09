@@ -1,16 +1,16 @@
 
 public class GameScene : BaseScene {
     private Difficulty _difficulty;
-    private CardStack _cardStack;
-    private PickedCards _pickedCards;
-    private UndoSection _undoSection;
-    private RestartSection _restartSection;
-    private ExitSection _exitSection;
-    private SelectPanel2d _selectPanel2d;
-    private Dictionary<EndStacks, EndStack> _endStacks;
-    private CardColumn[] _cardsColumns;
-    private IPanel[,] _gameObjects;
-    private ICardContainer[] _cardContainers;
+    private readonly CardStack _cardStack;
+    private readonly PickedCards _pickedCards;
+    private readonly UndoSection _undoSection;
+    private readonly RestartSection _restartSection;
+    private readonly ExitSection _exitSection;
+    private readonly SelectPanel2d _selectPanel2d;
+    private readonly Dictionary<EndStacks, EndStack> _endStacks;
+    private readonly CardColumn[] _cardsColumns;
+    private readonly IPanel[,] _gameObjects;
+    private readonly ICardContainer[] _cardContainers;
 
     public GameScene() {
         _pickedCards = new();
@@ -25,14 +25,8 @@ public class GameScene : BaseScene {
         };
         _cardsColumns = new CardColumn[7];
         _cardContainers = new ICardContainer[11];
-        _cardContainers[0] = _endStacks[EndStacks.HEART];
-        _cardContainers[1] = _endStacks[EndStacks.DIAMOND];
-        _cardContainers[2] = _endStacks[EndStacks.SPADE];
-        _cardContainers[3] = _endStacks[EndStacks.TREFL];
-        for (int i = 0; i < 7; i++) {
-            _cardsColumns[i] = new CardColumn(_cardsColumns.Length - i, _cardStack);
-            _cardContainers[i + 4] = _cardsColumns[i];
-        }
+        CreateCardsColumns();
+        
         _undoSection = new(this);
         _gameObjects = new IPanel[,] {
             {
@@ -58,7 +52,7 @@ public class GameScene : BaseScene {
     public override void Update()
     {
         base.Update();
-        TitleScene titleScene = Content.GetScene<TitleScene>(Scenes.TITLE_SCENE);
+        TitleScene titleScene = ContentManager.GetScene<TitleScene>(Scenes.TITLE_SCENE);
         _difficulty = titleScene.SelectedDifficulty;
         while(_sceneActive) {
             SelectPanel2d.ChooseState chooseState =_selectPanel2d.Listen();
@@ -66,6 +60,16 @@ public class GameScene : BaseScene {
                 _gameObjects[(int)_selectPanel2d.Index.Y, (int)_selectPanel2d.Index.X].ActionPerformed();
             }
             base.Update();
+        }
+    }
+    internal void CreateCardsColumns() {
+        _cardContainers[0] = _endStacks[EndStacks.HEART];
+        _cardContainers[1] = _endStacks[EndStacks.DIAMOND];
+        _cardContainers[2] = _endStacks[EndStacks.SPADE];
+        _cardContainers[3] = _endStacks[EndStacks.TREFL];
+        for (int i = 0; i < 7; i++) {
+            _cardsColumns[i] = new CardColumn(_cardsColumns.Length - i, _cardStack);
+            _cardContainers[i + 4] = _cardsColumns[i];
         }
     }
     public PickedCards PickedCards {

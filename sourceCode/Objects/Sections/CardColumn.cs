@@ -1,14 +1,14 @@
 
 
 public class CardColumn : StateObject,IPanel, ICardContainer {
-    private List<Card> _cards;
-    private DrawableObject _cardPlace;
+    private readonly List<Card> _cards;
+    private readonly DrawableObject _cardPlace;
     private bool _selected = false;
     private int _selectIndex;
     public static string[] _symbolOrder = EndStack._symbolOrder.Reverse().ToArray();
     public CardColumn(int cardsNumber, CardStack cardStack) : base(3) {
-        _cards = new();
-        _cardPlace = new DrawableObject(string.Format(Content.GetTextObject(Objects.CARD_BODY), "  ", ' '));
+        _cards = [];
+        _cardPlace = new DrawableObject(string.Format(ContentManager.GetTextObject(Objects.CARD_BODY), "  ", ' '));
         Card cardToAdd;
         for (int i = 0; i < cardsNumber; i++) {
             cardToAdd = cardStack.GetFirstCard();
@@ -23,10 +23,10 @@ public class CardColumn : StateObject,IPanel, ICardContainer {
         if(_cards.Count != 0) {
             _selectIndex = _cards.Count - 1;
             _selected = true;
-            Content.GetScene<GameScene>(Scenes.GAME_SCENE).DrawComponets();
+            ContentManager.GetScene<GameScene>(Scenes.GAME_SCENE).DrawComponets();
             ConsoleKey key;
             while(_selected) {
-                key = Console.ReadKey().Key;
+                key = Console.ReadKey(true).Key;
                 switch(key) {
                     case ConsoleKey.W:
                         if(_selectIndex > 0) {
@@ -43,7 +43,7 @@ public class CardColumn : StateObject,IPanel, ICardContainer {
                     break;
                     case ConsoleKey.Enter:
                         Card[] cardsToMove = _cards.GetRange(_selectIndex, _cards.Count - _selectIndex).ToArray();
-                        GameScene gameScene = Content.GetScene<GameScene>(Scenes.GAME_SCENE);
+                        GameScene gameScene = ContentManager.GetScene<GameScene>(Scenes.GAME_SCENE);
                         foreach (ICardContainer cardContainer in gameScene.CardContainers) {
                             if(cardContainer.IsCardsBeAdded(cardsToMove)) {
                                 gameScene.UndoSection.AddMove();
@@ -60,7 +60,7 @@ public class CardColumn : StateObject,IPanel, ICardContainer {
                         _selected = false;
                     break;
                 }
-                Content.GetScene<GameScene>(Scenes.GAME_SCENE).DrawComponets();
+                ContentManager.GetScene<GameScene>(Scenes.GAME_SCENE).DrawComponets();
             }
         }
     }
@@ -124,22 +124,6 @@ public class CardColumn : StateObject,IPanel, ICardContainer {
             }
          }
     }
-    public ConsoleColor BackgroundColor {
-         get {
-            if(_cards.Count > 0) {
-                return _cards[^1].BackgroundColor;
-            } else {
-                return _cardPlace.BackgroundColor;
-            }
-         }
-         set {
-            if(_cards.Count > 0) {
-                _cards[^1].BackgroundColor = value;
-            } else {
-                _cardPlace.BackgroundColor = value;
-            }
-         }
-    }
     public int Width {
         get {
             if(_cards.Count > 0) {
@@ -147,9 +131,6 @@ public class CardColumn : StateObject,IPanel, ICardContainer {
             } else {
                 return _cardPlace.Width;
             }
-         }
-         set {
-            _cardPlace.Width = value;
          }
     }
     public int Height {
@@ -159,9 +140,6 @@ public class CardColumn : StateObject,IPanel, ICardContainer {
             } else {
                 return _cardPlace.Height;
             }
-         }
-         set {
-            _cardPlace.Height = value;
          }
     }
 }

@@ -1,16 +1,10 @@
 
 
-public struct Vector {
-    private float _x = 0;
-    private float _y = 0;
+public struct Vector(float x, float y)
+{
+    private float _x = x;
+    private float _y = y;
 
-    public Vector(float x, float y) {
-        _x = x;
-        _y = y;
-    }
-    public Vector() {
-
-    }
     public void Add(float x, float y) {
         _x += x;
         _y += y;
@@ -20,11 +14,11 @@ public struct Vector {
         _y += vector.Y;
     }
     public float X {
-        get {return _x; }
+        readonly get {return _x; }
         set { _x = value; }
     }
     public float Y {
-        get {return _y; }
+        readonly get {return _y; }
         set { _y = value; }
     }
 

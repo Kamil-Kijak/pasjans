@@ -1,20 +1,20 @@
 
-public class Card : DrawableObject, IPanel
+public class Card : DrawableObject
 {
     private bool _showed;
-    private char _character;
-    private string _symbol;
+    private readonly char _character;
+    private readonly string _symbol;
     private ConsoleColor _cardColor;
-    private DrawableObject _pattern;
+    private readonly DrawableObject _pattern;
     public Card(string symbol, char character, bool showed) :
-     base(string.Format(Content.GetTextObject(Objects.CARD_BODY), symbol.PadRight(2, ' '), character), ConsoleColor.Black, ConsoleColor.Black)
+     base(string.Format(ContentManager.GetTextObject(Objects.CARD_BODY), symbol.PadRight(2, ' '), character), ConsoleColor.Black)
     {
         if(character == '♥' || character == '♦') {
             _cardColor = ConsoleColor.Red;
         } else {
             _cardColor = ConsoleColor.White;
         }
-        _pattern = new (string.Format(Content.GetCardPattern(symbol), character.ToString().PadRight(2, ' ')), _cardColor, ConsoleColor.Black);
+        _pattern = new (string.Format(ContentManager.GetCardPattern(symbol), character.ToString().PadRight(2, ' ')), _cardColor);
         _symbol = symbol;
         _character = character;
         Showed = showed;
@@ -29,11 +29,14 @@ public class Card : DrawableObject, IPanel
     public Card Copy() {
         return new Card(_symbol, _character, _showed);
     }
-
-    public void ActionPerformed()
-    {
-        
+    public override ConsoleColor ForegroundColor {
+        get { return _foregroundColor; }
+        set {
+            _foregroundColor = value;
+            _pattern.ForegroundColor = value;
+        }
     }
+
 
     public char Character {
         get {return _character;}
@@ -50,25 +53,12 @@ public class Card : DrawableObject, IPanel
             _showed = value;
             if(_showed) {
                 _foregroundColor = _cardColor;
-                Lines = string.Format(Content.GetTextObject(Objects.CARD_BODY), _symbol.PadRight(2, ' '), _character);
+                Lines = string.Format(ContentManager.GetTextObject(Objects.CARD_BODY), _symbol.PadRight(2, ' '), _character);
             } else {
                 _foregroundColor = ConsoleColor.White;
-                Lines = Content.GetTextObject(Objects.CARD_BACK);
+                Lines = ContentManager.GetTextObject(Objects.CARD_BACK);
             }
         }
     }
-    public override ConsoleColor ForegroundColor {
-        get { return _foregroundColor; }
-        set {
-            _foregroundColor = value;
-            _pattern.ForegroundColor = value;
-        }
-    }
-    public override ConsoleColor BackgroundColor {
-        get { return _backgroundColor; }
-        set {
-            _backgroundColor = value;
-            _pattern.BackgroundColor = value;
-        }
-    }
+
 }

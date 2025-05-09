@@ -2,13 +2,13 @@
 
 public class CardStack : StateObject, IPanel
 {
-    private List<Card> _cardStackList;
-    private DrawableObject _cardStackPlace;
-    private static Random _random = new Random();
+    private readonly List<Card> _cardStackList;
+    private readonly DrawableObject _cardStackPlace;
+    private static readonly Random _random = new();
 
     public CardStack() : base(3) {
-        _cardStackList = new();
-        _cardStackPlace = DrawManager.CreateBox(15, 11);
+        _cardStackList = [];
+        _cardStackPlace = ContentManager.CreateBox(15, 11);
         char[] characters = {'♥', '♦', '♠', '♣'};
         string[] symbols = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         foreach (char character in characters) {
@@ -45,7 +45,7 @@ public class CardStack : StateObject, IPanel
     }
     public void ActionPerformed()
     {
-        GameScene gameScene = Content.GetScene<GameScene>(Scenes.GAME_SCENE);
+        GameScene gameScene = ContentManager.GetScene<GameScene>(Scenes.GAME_SCENE);
         Card cardToAdd;
         if(_cardStackList.Count == 0) {
             ReShuffleCards(gameScene.PickedCards.GetAllCards());
@@ -103,35 +103,12 @@ public class CardStack : StateObject, IPanel
             }
         }
     }
-    public ConsoleColor BackgroundColor {
-         get {
-             if(_cardStackList.Count > 0) {
-                return _cardStackList[^1].BackgroundColor;
-            } else {
-                return _cardStackPlace.BackgroundColor;
-            }
-        }
-        set {
-             if(_cardStackList.Count > 0) {
-                _cardStackList[^1].BackgroundColor = value;
-            } else {
-                _cardStackPlace.BackgroundColor = value;
-            }
-        }
-         }
     public int Width {
          get {
              if(_cardStackList.Count > 0) {
                 return _cardStackList[^1].Width;
             } else {
                 return _cardStackPlace.Width;
-            }
-        }
-        set {
-             if(_cardStackList.Count > 0) {
-                _cardStackList[^1].Width = value;
-            } else {
-                _cardStackPlace.Width = value;
             }
         }
          }
@@ -141,13 +118,6 @@ public class CardStack : StateObject, IPanel
                 return _cardStackList[^1].Height;
             } else {
                 return _cardStackPlace.Height;
-            }
-        }
-        set {
-             if(_cardStackList.Count > 0) {
-                _cardStackList[^1].Height = value;
-            } else {
-                _cardStackPlace.Height = value;
             }
         }
     }

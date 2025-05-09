@@ -4,7 +4,7 @@ public abstract class StateObject {
     private List<Card> _actualState;
     public StateObject(int numberOfStates) {
         _stateManager = new(numberOfStates);
-        _actualState = new();
+        _actualState = [];
     }
     public virtual void SaveState() {
         _stateManager.SaveState(_actualState);

@@ -4,17 +4,17 @@
 public class PickedCards : StateObject, IPanel
 {
     public List<Card> _pickedCardsList;
-    private DrawableObject _pickedCardsPlace;
+    private readonly DrawableObject _pickedCardsPlace;
     public PickedCards() : base(3) {
-        _pickedCardsList = new();
-        _pickedCardsPlace = DrawManager.CreateBox(15, 11);
+        _pickedCardsList = [];
+        _pickedCardsPlace = ContentManager.CreateBox(15, 11);
         ActualState = _pickedCardsList;
     }
 
     public void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)
     {
         for(int i = Math.Min(3, _pickedCardsList.Count);i>0;i--) {
-            _pickedCardsList[_pickedCardsList.Count - i].Draw(new Vector(position.X + (i - 1) * 4, position.Y), alignX, alignY);
+            _pickedCardsList[^i].Draw(new Vector(position.X + (i - 1) * 4, position.Y), alignX, alignY);
         }
         if(_pickedCardsList.Count == 0) {
 
@@ -26,7 +26,7 @@ public class PickedCards : StateObject, IPanel
     {
         if(_pickedCardsList.Count != 0) {
             Card[] cardsToMove = [_pickedCardsList[^1]];
-            GameScene gameScene = Content.GetScene<GameScene>(Scenes.GAME_SCENE);
+            GameScene gameScene = ContentManager.GetScene<GameScene>(Scenes.GAME_SCENE);
             foreach (ICardContainer cardContainer in gameScene.CardContainers) {
                 if(cardContainer.IsCardsBeAdded(cardsToMove)) {
                     gameScene.UndoSection.AddMove();
@@ -65,35 +65,12 @@ public class PickedCards : StateObject, IPanel
             }
         }
     }
-    public ConsoleColor BackgroundColor {
-         get {
-             if(_pickedCardsList.Count > 0) {
-                return _pickedCardsList[^1].BackgroundColor;
-            } else {
-                return _pickedCardsPlace.BackgroundColor;
-            }
-        }
-        set {
-             if(_pickedCardsList.Count > 0) {
-                _pickedCardsList[^1].BackgroundColor = value;
-            } else {
-                _pickedCardsPlace.BackgroundColor = value;
-            }
-        }
-         }
     public int Width {
          get {
              if(_pickedCardsList.Count > 0) {
                 return _pickedCardsList[^1].Width;
             } else {
                 return _pickedCardsPlace.Width;
-            }
-        }
-        set {
-             if(_pickedCardsList.Count > 0) {
-                _pickedCardsList[^1].Width = value;
-            } else {
-                _pickedCardsPlace.Width = value;
             }
         }
          }
@@ -103,13 +80,6 @@ public class PickedCards : StateObject, IPanel
                 return _pickedCardsList[^1].Height;
             } else {
                 return _pickedCardsPlace.Height;
-            }
-        }
-        set {
-             if(_pickedCardsList.Count > 0) {
-                _pickedCardsList[^1].Height = value;
-            } else {
-                _pickedCardsPlace.Height = value;
             }
         }
     }

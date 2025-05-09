@@ -7,6 +7,6 @@ public enum Objects {
     DIAMOND = 4,
     SPADE = 5,
     TREFL = 6,
-    WINTITLE = 7
+    WIN_TITLE = 7
 
 }

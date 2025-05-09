@@ -10,7 +10,7 @@ public abstract class BaseScene {
     public bool SceneActive {
         get { return _sceneActive; }
         set {
-             _sceneActive = value; 
+            _sceneActive = value; 
              Update();
         }
     }

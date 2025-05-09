@@ -9,8 +9,7 @@ public class ExitSection : IPanel {
 
     public void ActionPerformed()
     {
-
-        Content.GetScene(Scenes.GAME_SCENE).SceneActive = false;
+        ContentManager.GetScene(Scenes.GAME_SCENE).SceneActive = false;
     }
 
     public void Draw(Vector position, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP)
@@ -22,16 +21,10 @@ public class ExitSection : IPanel {
         get {return _text.ForegroundColor;}
         set {_text.ForegroundColor = value;}
     }
-    public ConsoleColor BackgroundColor {
-        get {return _text.BackgroundColor;}
-        set {_text.BackgroundColor = value;}
-    }
     public int Width {
         get {return _text.Width;}
-        set {_text.Width = value;}
     }
     public int Height {
          get {return _text.Height;}
-        set {_text.Height = value;}
     }
 }

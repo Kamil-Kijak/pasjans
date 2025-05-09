@@ -1,19 +1,19 @@
 public class SelectPanel2d {
-    private IPanel[,] _objects;
-    private ConsoleColor _changeColor;
-    private ConsoleColor[,] _previrousColors;
+    private readonly IPanel[,] _objects;
+    private readonly ConsoleColor _changeColor;
+    private readonly ConsoleColor[,] _previrousColors;
     private Vector _index;
+    public enum ChooseState {
+        CHOOSEN = 0,
+        CHANGED = 1,
+        STILL = 2
+    }
     public SelectPanel2d(IPanel[,] objects, ConsoleColor changeColor, Vector startingIndex) {
         _index = startingIndex;
         _objects = objects;
         _previrousColors = new ConsoleColor[objects.GetLength(0), objects.GetLength(1)];
         SetPrevirousColors();
         _changeColor = changeColor;
-    }
-    public enum ChooseState {
-        CHOOSEN = 0,
-        CHANGED = 1,
-        STILL = 2
     }
     private void SetPrevirousColors() {
         for (int i = 0; i < _objects.GetLength(0); i++){
@@ -23,7 +23,7 @@ public class SelectPanel2d {
         }
     }
     public void Draw(Vector position, bool drawSelection, int[,] widthMargin, int hightMargin = 0, AlignX alignX = AlignX.LEFT, AlignY alignY = AlignY.TOP) {
-        Vector separator = new Vector(0, 0);
+        Vector separator = new();
         SetPrevirousColors();
         for (int i = 0; i < _objects.GetLength(0); i++) {
             for(int j = 0;j<_objects.GetLength(1);j++) {
@@ -41,7 +41,7 @@ public class SelectPanel2d {
         }
     }
     public ChooseState Listen() {
-        ConsoleKeyInfo key = Console.ReadKey();
+        ConsoleKeyInfo key = Console.ReadKey(true);
         switch(key.Key) {
             case ConsoleKey.Enter:
             return ChooseState.CHOOSEN;
@@ -75,5 +75,8 @@ public class SelectPanel2d {
     }
     public Vector Index {
         get { return _index; }
+        set {
+            _index = value;
+        }
     }
 }

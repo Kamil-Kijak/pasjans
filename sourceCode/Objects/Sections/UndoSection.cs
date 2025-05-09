@@ -2,14 +2,14 @@
 
 public class UndoSection : IPanel
 {
-    private Text _movesText;
-    private DrawableObject _box;
-    private Text _undoText;
-    private StateObject[] _stateObjects;
+    private readonly Text _movesText;
+    private readonly DrawableObject _box;
+    private readonly Text _undoText;
+    private readonly StateObject[] _stateObjects;
     private int _moves;
     private int _undoMoves;
     public UndoSection(GameScene gameScene) {
-        _box = DrawManager.CreateBox(17, 5);
+        _box = ContentManager.CreateBox(17, 5);
         _undoText = new("brak cofania");
         _movesText = new("Ruchy: 0");
         _moves = 0;
@@ -82,29 +82,14 @@ public class UndoSection : IPanel
             _undoText.ForegroundColor = value;
          }
     }
-    public ConsoleColor BackgroundColor {
-          get {
-            return _box.BackgroundColor;
-         }
-         set {
-            _box.BackgroundColor = value;
-            _undoText.BackgroundColor = value;
-         }
-    }
     public int Width {
          get {
             return _box.Width;
-         }
-         set {
-            _box.Width = value;
          }
     }
     public int Height {
         get {
             return _box.Height;
-        }
-        set {
-            _box.Height = value;
         }
     }
 }

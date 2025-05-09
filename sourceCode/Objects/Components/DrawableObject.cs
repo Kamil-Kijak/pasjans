@@ -5,24 +5,20 @@ public class DrawableObject {
     protected int _width;
     protected int _height;
     protected ConsoleColor _foregroundColor;
-    protected ConsoleColor _backgroundColor;
     public DrawableObject(string lines) {
         _lines = lines.Split(["\r\n", "\n"], StringSplitOptions.None);
         _width = _lines[0].Length;
         _height = _lines.Length;
         _foregroundColor = ConsoleColor.White;
-        _backgroundColor = ConsoleColor.Black;
     }
-    public DrawableObject(string lines, ConsoleColor foregroundColor, ConsoleColor backgroundColor) {
+    public DrawableObject(string lines, ConsoleColor foregroundColor) {
         _lines = lines.Split(["\r\n", "\n"], StringSplitOptions.None);
         _width = _lines[0].Length;
         _height = _lines.Length;
         _foregroundColor = foregroundColor;
-        _backgroundColor = backgroundColor;
     }
     public virtual void Draw(Vector position, AlignX alignX, AlignY alignY) {
         Console.ForegroundColor = _foregroundColor;
-        Console.BackgroundColor = _backgroundColor;
         int xPos = (int)Math.Ceiling(position.X - _width * ((int)alignX / 2f));
         int yPos;
         if(xPos < 0) {
@@ -46,23 +42,15 @@ public class DrawableObject {
     }
     public int Width {
         get{ return _width; }
-        set {_width = value;}
     }
     public int Height {
         get{ return _height; }
-        set {_width = value;}
     }
     public virtual ConsoleColor ForegroundColor {
         set {
             _foregroundColor = value;
         }
         get { return _foregroundColor; }
-    }
-    public virtual ConsoleColor BackgroundColor {
-        set {
-            _backgroundColor = value;
-        }
-        get { return _backgroundColor; }
     }
     public string Lines {
         set {
