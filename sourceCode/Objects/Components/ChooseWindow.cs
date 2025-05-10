@@ -29,6 +29,9 @@ public class ChooseWindow {
     }
     public bool Active {
         get { return _active; }
-        set{_active = value;}
+        set{
+            _active = value;
+            _selection.Index = new Vector(0, 0);
+            }
     }
 }

@@ -21,7 +21,7 @@ public static class LeaderBoardManager {
             leaderBoard.Sort(new ScoreComparator());
             string[] rows = new string[leaderBoard.Count];
             for (int i = 0; i < leaderBoard.Count; i++) {
-                rows[i] = new(string.Format("#{0}    data:{1}    ruchy:{2}", i + 1, leaderBoard[i].DateTime, leaderBoard[i].Score));
+                rows[i] = new(string.Format("#{0} {1} data:{2}    ruchy:{3}", i + 1, leaderBoard[i].DifficultySymbol, leaderBoard[i].DateTime, leaderBoard[i].Score));
             }
             return rows;
         } else {

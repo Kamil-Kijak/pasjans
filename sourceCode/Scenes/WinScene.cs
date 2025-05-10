@@ -50,11 +50,13 @@ public class WinScene : BaseScene {
         }
     }
     private void SaveScore() {
-        int moves = ContentManager.GetScene<GameScene>(Scenes.GAME_SCENE).UndoSection.Moves;
+        GameScene gameScene = ContentManager.GetScene<GameScene>(Scenes.GAME_SCENE);
+        int moves = gameScene.UndoSection.Moves;
+        Difficulty difficulty = gameScene.Difficulty;
         _scoreText = new(string.Format("Ułożyłeś pasjansa w {0} ruchach", moves));
         LeaderBoardManager.AddNewLeaderBoardScore(new ScoreObject(){
         DateTime = DateOnly.FromDateTime(DateTime.Now).ToString().Replace('.', '-'),
-         Score = moves});
+         Score = moves, DifficultySymbol = difficulty == Difficulty.EASY ? 'ł' : 't'});
         _scores = new(LeaderBoardManager.LoadLeaderBoard());
     }
 }
