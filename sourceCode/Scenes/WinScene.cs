@@ -1,9 +1,10 @@
 
 
 public class WinScene : BaseScene {
-    private DrawableObject _title;
-    private DrawableObject _leaderBoardBox;
+    private readonly DrawableObject _title;
+    private readonly DrawableObject _leaderBoardBox;
     private Text _scoreText;
+    private readonly Text _leaderBoardText;
     private Text _scores;
     private readonly SelectPanel2d _afterWinOptions;
 
@@ -15,6 +16,7 @@ public class WinScene : BaseScene {
             {new Text("--->Zagraj ponownie<---")}, { new Text("--->Wyjdź<---")}
         }, ConsoleColor.Red, new Vector());
         _scoreText = new("");
+        _leaderBoardText = new("Ranking");
     }
 
     public override void DrawComponets()
@@ -22,9 +24,10 @@ public class WinScene : BaseScene {
         base.DrawComponets();
         _title.Draw(new Vector(Console.WindowWidth / 2, 0), AlignX.CENTER, AlignY.TOP);
         _scoreText.Draw(new Vector(Console.WindowWidth / 2, 8), AlignX.CENTER, AlignY.TOP);
+        _leaderBoardText.Draw(new Vector(Console.WindowWidth / 2, 10), AlignX.CENTER, AlignY.TOP);
         _leaderBoardBox.Draw(new Vector(Console.WindowWidth / 2, 11), AlignX.CENTER, AlignY.TOP);
         _scores.Draw(new Vector(Console.WindowWidth / 2 - 20, 13), AlignX.LEFT, AlignY.TOP); 
-        _afterWinOptions.Draw(new Vector(Console.WindowWidth / 2, 44),true, new int[,]{{0}, {0}}, 2, AlignX.CENTER, AlignY.TOP);
+        _afterWinOptions.Draw(new Vector(Console.WindowWidth / 2, 44),true, new int[,]{}, 2, AlignX.CENTER, AlignY.TOP);
     }
     public override void Update()
     {
@@ -48,9 +51,7 @@ public class WinScene : BaseScene {
     }
     private void SaveScore() {
         int moves = ContentManager.GetScene<GameScene>(Scenes.GAME_SCENE).UndoSection.Moves;
-        _scoreText = new([
-            string.Format("Ułożyłeś pasjansa w {0} ruchach", moves),
-            "Ranking"]);
+        _scoreText = new(string.Format("Ułożyłeś pasjansa w {0} ruchach", moves));
         LeaderBoardManager.AddNewLeaderBoardScore(new ScoreObject(){
         DateTime = DateOnly.FromDateTime(DateTime.Now).ToString().Replace('.', '-'),
          Score = moves});

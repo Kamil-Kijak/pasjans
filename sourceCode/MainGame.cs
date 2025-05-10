@@ -1,11 +1,15 @@
 ﻿
 
+using System.Text;
+
 internal class MainGame
 {
     private static void Main(string[] args)
     {
+        Console.OutputEncoding = Encoding.UTF8;
         Console.Title = "Pasjans by Kamil Kijak";
         Console.CursorVisible = false;
+
         if(!Path.Exists(LeaderBoardManager.AppPath)) {
             Directory.CreateDirectory(LeaderBoardManager.AppPath);
         }

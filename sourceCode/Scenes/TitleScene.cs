@@ -37,16 +37,16 @@ public class TitleScene : BaseScene {
         switch(_states) {
             case 0:
                 _gameOptionSelectBox.Draw(new Vector(Console.WindowWidth / 2, 11), AlignX.CENTER, AlignY.TOP);
-                _gameOptionSelect.Draw(new Vector(Console.WindowWidth / 2, 13), true, new[,]{{0}, {0}, {0}}, 1, AlignX.CENTER);
+                _gameOptionSelect.Draw(new Vector(Console.WindowWidth / 2, 13), true, new int[,]{}, 1, AlignX.CENTER);
             break;
             case 1:
                 _leaderBoardBox.Draw(new Vector(Console.WindowWidth / 2, 11), AlignX.CENTER, AlignY.TOP);
-                _leaderBoardExit.Draw(new Vector(Console.WindowWidth / 2, 42), true, new int[,]{{0}}, 0, AlignX.CENTER);  
+                _leaderBoardExit.Draw(new Vector(Console.WindowWidth / 2, 42), true, new int[,]{}, 0, AlignX.CENTER);  
                 _scores.Draw(new Vector(Console.WindowWidth / 2 - 20, 13), AlignX.LEFT, AlignY.TOP); 
             break;
             case 2:
                 _gameOptionSelectBox.Draw(new Vector(Console.WindowWidth / 2, 11), AlignX.CENTER, AlignY.TOP);
-                _difficultySelect.Draw(new Vector(Console.WindowWidth / 2, 13), true, new int[,]{{0}, {0}, {0}}, 1, AlignX.CENTER);
+                _difficultySelect.Draw(new Vector(Console.WindowWidth / 2, 13), true, new int[,]{}, 1, AlignX.CENTER);
             break;
         }
     }

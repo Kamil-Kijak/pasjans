@@ -11,7 +11,8 @@ public abstract class BaseScene {
         get { return _sceneActive; }
         set {
             _sceneActive = value; 
-             Update();
+            if(_sceneActive)
+                Update();
         }
     }
 }

@@ -45,8 +45,8 @@ public class GameScene : BaseScene {
     {
         base.DrawComponets();
         _selectPanel2d.Draw(new Vector(1, 1), !_cardsColumns.Any(column => column.Selected), new int[,]{
-            {6, 9, 1, 6, 6, 6, 2, 6},
-            {6, 6, 6, 6, 6, 6, 2, 0}
+            {6, 9, 1, 6, 6, 6, 2},
+            {6, 6, 6, 6, 6, 6, 2}
             }, 1);
     }
     public override void Update()

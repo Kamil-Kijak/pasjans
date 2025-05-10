@@ -34,7 +34,10 @@ public class SelectPanel2d {
                 } else {
                     _objects[i, j].Draw(new Vector(position.X + separator.X, position.Y + separator.Y), alignX, alignY);
                 }
-                separator.X+= _objects[i, j].Width + widthMargin[i, j];
+                separator.X+= _objects[i, j].Width;
+                if(_objects.GetLength(1) - 1 != j) {
+                    separator.X+=widthMargin[i, j];
+                }
             }
             separator.Y+= _objects[i, 0].Height + hightMargin;
             separator.X = 0;
