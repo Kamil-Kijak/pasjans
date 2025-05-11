@@ -18,16 +18,6 @@ public class CardColumn : StateObject,IPanel, ICardContainer {
         ActualState = _cards;
     }
 
-    public override void LoadState()
-    {
-        base.LoadState();
-        for (int i = 0; i < _cards.Count - 1; i++) {
-            if(_cards[i].Showed) {
-                _cards[i].Showed = false;
-            }
-        }
-    }
-
     public void ActionPerformed()
     {
         if(_cards.Count != 0) {
