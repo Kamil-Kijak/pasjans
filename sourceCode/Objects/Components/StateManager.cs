@@ -9,7 +9,11 @@ public class StateManager {
         for (int i = _states.Length - 1; i > 0; i--) {
                 (_states[i - 1], _states[i]) = (_states[i], _states[i - 1]);
         }
-        _states[0] = newState.ToList();
+        List<Card> newStateCopy = new();
+        foreach (Card card in newState){
+            newStateCopy.Add(card.Copy());
+        }
+        _states[0] = newStateCopy;
     }
     public List<Card> LoadPrevirousState() {
         List<Card> list = _states[0].ToList();
